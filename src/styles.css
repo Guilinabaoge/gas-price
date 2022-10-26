@@ -1,0 +1,23 @@
+body {
+  margin: 0;
+  padding: 0;
+  overflow: hidden;
+  font-family: 'Poppins', sans-serif;
+}
+pre {
+  font-size: 7em;
+}
+/* .marks circle {
+  fill: #FF8C00;
+  filter: brightness(100%);
+}
+.marks path {
+  fill: #F0F8FF;
+  stroke: #1E90FF;
+}
+ */
+circle {
+  fill: #5e071e;
+  opacity: 0.5;
+}
+
