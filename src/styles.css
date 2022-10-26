@@ -16,8 +16,14 @@ pre {
   stroke: #1E90FF;
 }
  */
-circle {
-  fill: #5e071e;
-  opacity: 0.5;
+
+
+path {
+  stroke: black;
+  pointer-events:all;
+}
+
+path:hover {
+  fill: red;
 }
 
