@@ -10,13 +10,9 @@ const projection = geoMercator()
   .scale([w]);
 const path = geoPath(projection);
 
-// function sayHi(){
-//   console.log('hi')
-// }
 
 function setState(state){
   document.getElementById('statename').textContent = state;
-  // console.log(name.textContent)
 }
 
 export const Marks = ({
@@ -28,7 +24,7 @@ export const Marks = ({
   <g className="marks">
     {map.features.map(feature => {
       const d = rowByState.get(feature.properties.NAME_1)
-      return <path fill={colorScale(colorValue(d))} d={path(feature)} onClick={()=>setState(feature.properties.NAME_1)}/> 
+      return <path fill={colorScale(colorValue(d))} d={path(feature)} onMouseOver={()=>setState(feature.properties.NAME_1)}/> 
     })}
     
   </g>

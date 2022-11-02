@@ -56,8 +56,8 @@ const App = () => {
 
   
   return (
-    <svg viewBox="0 0 2000 1500">
-      <svg viewBox="500 0 800 1500" id="colorbar">
+    <svg viewBox="0 0 2000 1500" id="colorbar">
+      <svg viewBox="500 0 800 1500" >
         <g transform = "translate(-1050,-650) scale(4)">
             <Marks
               map={map} 
@@ -67,12 +67,12 @@ const App = () => {
             />
         </g>
       </svg>
-      <rect x="0" y="0" width="2000" height="60" fill="blue"></rect>
+      {/* <rect x="0" y="0" width="2000" height="60" fill="blue"></rect>
       <text x="1000" y="40" fontFamily="Verdana" fontSize="35" fill="yellow" textAnchor="middle">Germany gas price visualization</text>
       <line x1="600" y1="1000" x2="600" y2="60" stroke="black" />
       <line x1="1350" y1="1000" x2="1350" y2="60" stroke="black" />
-      <rect x="1050" y="70" width="200" height="100" fill="none" stroke="black" rx="15" ></rect>
-      <text x="1150" y="130" fontFamily="Verdana" fontSize="35" fill="yellow" textAnchor="middle" id="statename">State</text>
+      <rect x="1050" y="70" width="220" height="100" fill="none" stroke="black" rx="15" ></rect>
+      <text x="1150" y="130" fontFamily="Verdana" fontSize="15" fill="black" textAnchor="middle" id="statename">State</text> */}
     </svg>
   );
 };
