@@ -1,22 +1,12 @@
-body {
-  margin: 0;
-  padding: 0;
-  overflow: hidden;
-  font-family: 'Poppins', sans-serif;
-}
+
 pre {
   font-size: 7em;
 }
-/* .marks circle {
-  fill: #FF8C00;
-  filter: brightness(100%);
-}
-.marks path {
-  fill: #F0F8FF;
-  stroke: #1E90FF;
-}
- */
 
+body {
+
+  position: relative;
+}
 
 path {
   pointer-events:all;
@@ -24,5 +14,18 @@ path {
 
 path:hover {
   fill: red;
+}
+
+#hbar div {
+  
+  right: 0;
+  width:800px;
+  height: 30x;
+
+}
+
+#colorbar g {
+  transform: scale();
+  
 }
 

@@ -3,24 +3,23 @@ import { legendColor } from 'd3-svg-legend'
 
 
 export const ColorBar = (colorScale) => {
-    // var svg = select("#colorbar");
+  // document.getElementById('colorbar')
+  var svg = select("#colorbar");
+  svg.append("g")
+  .attr("class", "legendQuant")
+  .attr("transform", "translate(50,70) scale(1)");
 
-    // svg.append("g")
-    //     .attr("class", "legendQuant")
-    //     .attr("transform", "translate(20,20");
+  var legend = legendColor()
+    .labelFormat(format(".3f"))
+    .cells(10)
+    .shape("rect")
+    .titleWidth(10)
+    .shapeHeight(15)
+    .shapeWidth(15)
+    .scale(colorScale);
 
-    // var legend = legendColor()
-    //     .labelFormat(format(".2f"))
-    //     .useClass(true)
-    //     .title("title")
-    //     .titleWidth(100)
-    //     .scale(colorScale);
-
-    // svg.select(".legendQuant")
-    //     .call(legend);
-
-    return (<g fill="red" stroke="green" stroke-width="1">
-    <circle cx="400" cy="200" r="2" />
-  </g>);
-
+  svg.select(".legendQuant")
+    .call(legend);
+  
+  
 };
