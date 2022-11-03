@@ -7,7 +7,7 @@ export const ColorBar = (colorScale) => {
   var svg = select("#colorbar");
   svg.append("g")
   .attr("class", "legendQuant")
-  .attr("transform", "translate(50,70) scale(1)");
+  .attr("transform", "translate(100,70) scale(1)");
 
   var legend = legendColor()
     .labelFormat(format(".3f"))

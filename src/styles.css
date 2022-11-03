@@ -16,16 +16,28 @@ path:hover {
   fill: red;
 }
 
-#hbar div {
+/* #hbar div {
   
   right: 0;
   width:800px;
   height: 30x;
 
-}
+} */
 
-#colorbar g {
-  transform: scale();
-  
+.float-parent-element { 
+  width: 50%; 
+} 
+.float-child-element { 
+  float: left; 
+  width: 50%; 
+} 
+.horizon { 
+  background-color: red; 
+  margin-right: 0%; 
+  width: 800px;
+} 
+.yellow { 
+  margin-left: 100%; 
+  height: 800px; 
+  background-color: yellow; 
 }
-

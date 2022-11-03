@@ -27,6 +27,7 @@ export const HorizonChart= () => {
         series.push(Math.abs(Math.cos(i/100) + variance)); // only positive values
     }
 
+
     var hChart = horizonChart();
     // 4-band horizon (4 negative & 4 positive bands)
     var colors = ['#313695', '#4575b4', '#74add1', '#abd9e9', '#fee090', '#fdae61', '#f46d43', '#d73027'];
