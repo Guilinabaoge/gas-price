@@ -25,21 +25,20 @@ path:hover {
 } */
 
 .float-parent-element { 
-  width: 50%; 
+  width: 100%; 
 } 
 .float-child-element { 
   float: left; 
   width: 50%; 
 } 
 .red { 
- 
-  margin-right: 0%; 
-  width: 800px;
+  transform: scale(1);
+  margin-left: 0%; 
+  width: 1200px;
   
 } 
 .yellow { 
-  margin-left: 100%; 
+  margin-left: 0%; 
   height: 800px; 
-  background-color: yellow; 
 }
 

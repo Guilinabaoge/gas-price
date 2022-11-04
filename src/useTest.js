@@ -1,10 +1,12 @@
 import { useState, useEffect } from 'react';
 import { csv } from 'd3';
 
-// const csvUrl =
-//   'https://gist.githubusercontent.com/Guilinabaoge/e9296eecbb2067ee2e886e79e09360cb/raw/68363d3047a430761056b2d13da252c49072bc25/test.csv';
 
-const csvUrl = 'https://gist.githubusercontent.com/Guilinabaoge/fcb86a8910b6cd15778bbb87ec3a52e8/raw/259b95ef5897f57af88a1d1fae68deb350a671e0/hchart.csv';
+
+// const csvUrl = 'https://gist.githubusercontent.com/Guilinabaoge/fcb86a8910b6cd15778bbb87ec3a52e8/raw/259b95ef5897f57af88a1d1fae68deb350a671e0/hchart.csv';
+
+const csvUrl = 'http://127.0.0.1:5000/hchart/2015-01-01/2015-01-02'
+
 
 export const useTest = () => {
   const [data, setData] = useState(null);
@@ -20,6 +22,6 @@ export const useTest = () => {
 
     csv(csvUrl, row).then(setData);
   }, []);
-
+  
   return data;
 };
