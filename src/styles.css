@@ -31,10 +31,11 @@ path:hover {
   float: left; 
   width: 50%; 
 } 
-.horizon { 
-  background-color: red; 
+.red { 
+ 
   margin-right: 0%; 
   width: 800px;
+  
 } 
 .yellow { 
   margin-left: 100%; 

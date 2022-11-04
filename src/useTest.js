@@ -11,7 +11,11 @@ export const useTest = () => {
   
   useEffect(() => {
     const row = d => {
-      return d;
+        // console.log(Date(data[0]['date']))
+        // console.log(Number(data[0]['value']))
+        d.date = new Date(d.date)
+        d.value = Number(d.value)
+        return d;
     };
 
     csv(csvUrl, row).then(setData);

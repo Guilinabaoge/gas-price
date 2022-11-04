@@ -1,46 +1,54 @@
-import {curveLinear,scaleUtc,scaleLinear,schemeGreys,map,extent,max,InternSet,range,axisTop,create,group,area} from 'd3'
+// import {curveLinear,scaleUtc,scaleLinear,schemeGreys,map,extent,max,InternSet,range,axisTop,create,group,area} from 'd3'
+import * as d3 from "d3"
 // Copyright 2021 Observable, Inc.
 // Released under the ISC license.
 // https://observablehq.com/@d3/horizon-chart
+// Copyright 2021 Observable, Inc.
+// Released under the ISC license.
+// https://observablehq.com/@d3/horizon-chart
+
 export function HChart(data, {
   x = ([x]) => x, // given d in data, returns the (temporal) x-value
   y = ([, y]) => y, // given d in data, returns the (quantitative) y-value
   z = () => 1, // given d in data, returns the (categorical) z-value
   defined, // for gaps in data
-  curve = curveLinear, // method of interpolation between points
+  curve = d3.curveLinear, // method of interpolation between points
   marginTop = 20, // top margin, in pixels
   marginRight = 0, // right margin, in pixels
   marginBottom = 0, // bottom margin, in pixels
   marginLeft = 0, // left margin, in pixels
   width = 640, // outer width, in pixels
-  size = 25, // outer height of a single horizon, in pixels
+  size = 30, // outer height of a single horizon, in pixels
   bands = 3, // number of bands
   padding = 1, // separation between adjacent horizons
-  xType = scaleUtc, // type of x-scale
+  xType = d3.scaleUtc, // type of x-scale
   xDomain, // [xmin, xmax]
   xRange = [marginLeft, width - marginRight], // [left, right]
-  yType = scaleLinear, // type of y-scale
+  yType = d3.scaleLinear, // type of y-scale
   yDomain, // [ymin, ymax]
   yRange = [size, size - bands * (size - padding)], // [bottom, top]
   zDomain, // array of z-values
-  scheme = schemeGreys, // color scheme; shorthand for colors
+  scheme = d3.schemeYlOrRd, // color scheme; shorthand for colors
   colors = scheme[Math.max(3, bands)], // an array of colors
 } = {}) {
+  // console.log(Date(data[0]['date']))
+  // console.log(Number(data[0]['value']))
+  console.log(data)
   // Compute values.
-  const X = map(data, x);
-  const Y = map(data, y);
-  const Z = map(data, z);
+  const X = d3.map(data, x);
+  const Y = d3.map(data, y);
+  const Z = d3.map(data, z);
   if (defined === undefined) defined = (d, i) => !isNaN(X[i]) && !isNaN(Y[i]);
-  const D = map(data, defined);
+  const D = d3.map(data, defined);
 
   // Compute default domains, and unique the z-domain.
-  if (xDomain === undefined) xDomain = extent(X);
-  if (yDomain === undefined) yDomain = [0, max(Y)];
+  if (xDomain === undefined) xDomain = d3.extent(X);
+  if (yDomain === undefined) yDomain = [0, d3.max(Y)];
   if (zDomain === undefined) zDomain = Z;
-  zDomain = new InternSet(zDomain);
+  zDomain = new d3.InternSet(zDomain);
 
   // Omit any data not present in the z-domain.
-  const I = range(X.length).filter(i => zDomain.has(Z[i]));
+  const I = d3.range(X.length).filter(i => zDomain.has(Z[i]));
 
   // Compute height.
   const height = zDomain.size * size + marginTop + marginBottom;
@@ -48,20 +56,23 @@ export function HChart(data, {
   // Construct scales and axes.
   const xScale = xType(xDomain, xRange);
   const yScale = yType(yDomain, yRange);
-  const xAxis = axisTop(xScale).ticks(width / 80).tickSizeOuter(0);
+  const xAxis = d3.axisTop(xScale).ticks(width / 80).tickSizeOuter(0);
   
   // A unique identifier for clip paths (to avoid conflicts).
   const uid = `O-${Math.random().toString(16).slice(2)}`;
 
+
   // Construct an area generator.
-  const Area = area()
+  const area = d3.area()
       .defined(i => D[i])
       .curve(curve)
       .x(i => xScale(X[i]))
       .y0(yScale(0))
       .y1(i => yScale(Y[i]));
+
   
-  const svg = create("svg")
+
+  const svg = d3.create("svg")
       .attr("width", width)
       .attr("height", height)
       .attr("viewBox", [0, 0, width, height])
@@ -70,7 +81,7 @@ export function HChart(data, {
       .attr("font-size", 10);
 
   const g = svg.selectAll("g")
-    .data(group(I, i => Z[i]))
+    .data(d3.group(I, i => Z[i]))
     .join("g")
       .attr("transform", (_, i) => `translate(0,${i * size + marginTop})`);
 
@@ -85,8 +96,11 @@ export function HChart(data, {
 
   defs.append("path")
       .attr("id", (_, i) => `${uid}-path-${i}`)
-      .attr("d", ([, I]) => Area(I));
+      .attr("d", ([, I]) => area(I));
 
+
+  
+  
   g
     .attr("clip-path", (_, i) => `url(${new URL(`#${uid}-clip-${i}`, window.location)})`)
     .selectAll("use")

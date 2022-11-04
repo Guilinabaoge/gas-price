@@ -1,6 +1,6 @@
 import React, { StrictMode,useState, useCallback, useEffect } from 'react';
 import { createRoot } from "react-dom/client";
-import { interpolateYlOrRd, scaleSequential, min,max,select,format,interpolateBlues,scaleBand,scaleLinear} from 'd3';
+import { interpolateYlOrRd, scaleSequential, min,max,select,format,interpolateBlues,schemeYlOrRd} from 'd3';
 import { legendColor } from 'd3-svg-legend';
 import { useMap } from './useMap';
 import { Marks } from './Marks';
@@ -10,12 +10,9 @@ import { ColorBar } from './ColorBar'
 import { HorizonChart } from './HorizonChart';
 import { HChart} from './HChart';
 
-var margin = {top: 20, right: 20, bottom: 100, left: 60};
+
 const width = 3072;
 const height = 1920;
-
-// const width = 2960;
-// const height = 2500;
 
 
 const App = () => {
@@ -40,23 +37,30 @@ const App = () => {
 
   ColorBar(colorScale);
 
-  const hi = HChart(test,{
-    x: d => d.date,
-    y: d => d.value,
-    z: d => d.name
-  });
-
-  document.body.appendChild(hi)
-  console.log(document.body);
-  // let div = document.getElementById("hbar");
-  // div.insertAdjacentElement('afterend',hi)
-  // console.log(div);
 
   
 
+  const hi = HChart(test,{
+    x: d => d.date,
+    y: d => d.value,
+    z: d => d.name,
+  });
+
+
+
+  if (document.getElementById("hbar") !== null && document.getElementById("hbar").hasChildNodes() === false) {
+    document.getElementById("hbar").appendChild(hi)
+    document.getElementById("hbar").firstChild.classList.add("red")
+    console.log(document.getElementById("hbar").firstChild)
+  } 
+  
+  
+  
+ 
+
   return (
     <div class="float-parent-element">
-      <div class="float-child-element" id="hbar" >
+      <div class="float-child-element" id="hbar">
       </div>
       <div class="float-child-element">
         <svg class="yellow" width={width} height={height} id="colorbar">
