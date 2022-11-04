@@ -1,4 +1,4 @@
-import {curveLinear,scaleUtc,scaleLinear,schemeGreys,map,extent,max,InternSet,range,axisTop,create,group} from 'd3'
+import {curveLinear,scaleUtc,scaleLinear,schemeGreys,map,extent,max,InternSet,range,axisTop,create,group,area} from 'd3'
 // Copyright 2021 Observable, Inc.
 // Released under the ISC license.
 // https://observablehq.com/@d3/horizon-chart
@@ -54,7 +54,7 @@ export function HChart(data, {
   const uid = `O-${Math.random().toString(16).slice(2)}`;
 
   // Construct an area generator.
-  const area = area()
+  const Area = area()
       .defined(i => D[i])
       .curve(curve)
       .x(i => xScale(X[i]))
@@ -85,7 +85,7 @@ export function HChart(data, {
 
   defs.append("path")
       .attr("id", (_, i) => `${uid}-path-${i}`)
-      .attr("d", ([, I]) => area(I));
+      .attr("d", ([, I]) => Area(I));
 
   g
     .attr("clip-path", (_, i) => `url(${new URL(`#${uid}-clip-${i}`, window.location)})`)

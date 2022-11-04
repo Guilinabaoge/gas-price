@@ -39,9 +39,21 @@ const App = () => {
 		.domain([min(gas,colorValue),max(gas,colorValue)]);
 
   ColorBar(colorScale);
-  HorizonChart()
 
- 
+  const hi = HChart(test,{
+    x: d => d.date,
+    y: d => d.value,
+    z: d => d.name
+  });
+
+  document.body.appendChild(hi)
+  console.log(document.body);
+  // let div = document.getElementById("hbar");
+  // div.insertAdjacentElement('afterend',hi)
+  // console.log(div);
+
+  
+
   return (
     <div class="float-parent-element">
       <div class="float-child-element" id="hbar" >
