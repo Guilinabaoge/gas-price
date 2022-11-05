@@ -24,6 +24,11 @@ path:hover {
 
 } */
 
+.dashboard-container{
+  background-color:bisque;
+}
+
+
 .float-parent-element { 
   width: 100%; 
 } 
@@ -33,8 +38,10 @@ path:hover {
 } 
 .red { 
   transform: scale(1);
-  margin-left: 0%; 
+  margin-left: 0%;
+  margin-top: 10%; 
   width: 1200px;
+  background-color:bisque
   
 } 
 .yellow { 

@@ -27,7 +27,7 @@ export const Marks = ({
   <g className="marks">
     {map.features.map(feature => {
       const d = rowByState.get(feature.properties.NAME_1)
-      return <path transform = "translate(-1200,-650) scale(3.5)"fill={colorScale(colorValue(d))} d={path(feature)}/> 
+      return <path transform = "translate(-1150,-610) scale(3.4)"fill={colorScale(colorValue(d))} d={path(feature)}/> 
       // onMouseOver={()=>setState(feature.properties.NAME_1)}
     })}
     

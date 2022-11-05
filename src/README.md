@@ -4,3 +4,4 @@
 3. Add scroll bar under the horizontal chart, map will change while scroll. 
 4. Add menu to select specific day. 
 5. Show the name,data,statename at corner when hover. 
+6. Zoom map plot each station with brand?

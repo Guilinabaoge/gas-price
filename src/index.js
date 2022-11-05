@@ -67,6 +67,14 @@ const App = () => {
             </g>
         </svg>
       </div>
+      <div class="dashboard-container">
+        <select id="station_select" onchange="update_url()" class="dashboard" transform>
+          <option value="plza">Diesel</option>
+          <option value="mont">E5</option>
+          <option value="mont">E10</option>
+        </select>
+        <input type="range" min="1" max="400" value="100" class="dashboard" id="myRange"/>
+      </div>
     </div>
     
   );
