@@ -1,12 +1,14 @@
 import React, { StrictMode} from 'react';
 import { createRoot } from "react-dom/client";
-import { scaleSequential, min,max,interpolateBlues} from 'd3';
+import { scaleSequential, min,max,interpolateBlues,interpolateOranges} from 'd3';
 import { useMap } from './useMap';
 import { Marks } from './Marks';
 import { useGas } from './useGas'; 
 import { useTest } from './useTest'; 
 import { ColorBar } from './ColorBar'
 import { HChart} from './HChart';
+import {svgPanZoom} from 'svg-pan-zoom'
+import * as tiger from "svg-pan-zoom";
 
 
 const width = 3072;
@@ -16,7 +18,6 @@ const App = () => {
   const map = useMap();
   const gas = useGas(); 
   const test = useTest();
-  console.log(test)
 
 
   if (!map|| !gas) {
@@ -30,7 +31,7 @@ const App = () => {
   
   const colorValue = d => d.diesel;
 
-  const colorScale = scaleSequential(interpolateBlues)
+  const colorScale = scaleSequential(interpolateOranges)
 		.domain([min(gas,colorValue),max(gas,colorValue)]);
 
   ColorBar(colorScale);
@@ -45,8 +46,9 @@ const App = () => {
   if (document.getElementById("hbar") !== null && document.getElementById("hbar").hasChildNodes() === false && test!==null) {
     document.getElementById("hbar").appendChild(hChart)
     document.getElementById("hbar").firstChild.classList.add("red")
-    console.log(document.getElementById("hbar").firstChild)
+    // console.log(document.getElementById("hbar").firstChild)
   } 
+  
   
   
   return (

@@ -1,9 +1,11 @@
-import { geoMercator, geoPath,select } from 'd3';
+import { geoMercator, geoPath,select,zoom } from 'd3';
 import './styles.css'
 import React from 'react';
 
 const w = 960;
-const h = 100;
+
+const width = 3072;
+const height = 1920;
  
 const projection = geoMercator()
 	.center([10.40, 53.31])
@@ -11,9 +13,10 @@ const projection = geoMercator()
 const path = geoPath(projection);
 
 
-function setState(state){
-  document.getElementById('statename').textContent = state;
-}
+// function setState(state){
+//   document.getElementById('statename').textContent = state;
+// }
+
 
 export const Marks = ({
   map,
@@ -24,7 +27,8 @@ export const Marks = ({
   <g className="marks">
     {map.features.map(feature => {
       const d = rowByState.get(feature.properties.NAME_1)
-      return <path transform = "translate(-1200,-650) scale(3.5)"fill={colorScale(colorValue(d))} d={path(feature)} onMouseOver={()=>setState(feature.properties.NAME_1)}/> 
+      return <path transform = "translate(-1200,-650) scale(3.5)"fill={colorScale(colorValue(d))} d={path(feature)}/> 
+      // onMouseOver={()=>setState(feature.properties.NAME_1)}
     })}
     
   </g>

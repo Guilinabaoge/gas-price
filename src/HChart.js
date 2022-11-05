@@ -18,8 +18,8 @@ export function HChart(data, {
   marginBottom = 0, // bottom margin, in pixels
   marginLeft = 0, // left margin, in pixels
   width = 640, // outer width, in pixels
-  size = 30, // outer height of a single horizon, in pixels
-  bands = 1, // number of bands
+  size = 20, // outer height of a single horizon, in pixels
+  bands = 9, // number of bands
   padding = 1, // separation between adjacent horizons
   xType = d3.scaleUtc, // type of x-scale
   xDomain, // [xmin, xmax]
@@ -28,7 +28,7 @@ export function HChart(data, {
   yDomain, // [ymin, ymax]
   yRange = [size, size - bands * (size - padding)], // [bottom, top]
   zDomain, // array of z-values
-  scheme = d3.schemeBlues, // color scheme; shorthand for colors
+  scheme = d3.schemeOranges, // color scheme; shorthand for colors
   colors = scheme[Math.max(3, bands)], // an array of colors
 } = {}) {
   // console.log(Date(data[0]['date']))
@@ -43,7 +43,7 @@ export function HChart(data, {
 
   // Compute default domains, and unique the z-domain.
   if (xDomain === undefined) xDomain = d3.extent(X);
-  if (yDomain === undefined) yDomain = [800, d3.max(Y)];
+  if (yDomain === undefined) yDomain = [0, d3.max(Y)];
   if (zDomain === undefined) zDomain = Z;
   zDomain = new d3.InternSet(zDomain);
 
@@ -98,8 +98,6 @@ export function HChart(data, {
       .attr("id", (_, i) => `${uid}-path-${i}`)
       .attr("d", ([, I]) => area(I));
 
-
-  
   
   g
     .attr("clip-path", (_, i) => `url(${new URL(`#${uid}-clip-${i}`, window.location)})`)
@@ -112,9 +110,9 @@ export function HChart(data, {
 
   g.append("text")
       .attr("x", marginLeft)
-      .attr("y", (size + padding) / 4)
+      .attr("y", (size + padding) / 3)
       .attr("dy", "0.35em")
-      .attr("transform","scale(2)")
+      .attr("transform","scale(1.5)")
       .text(([z]) => z);
 
   // Since there are normally no left or right margins, don’t show ticks that
