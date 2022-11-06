@@ -16,21 +16,30 @@ path:hover {
   fill: red;
 }
 
-/* #hbar div {
-  
-  right: 0;
-  width:800px;
-  height: 30x;
+#h-title{
+  font-size: 40px;
+  position: relative;
+  right:800px
+}
 
+/* #dashboard-container{
+  top:-500px;
+  height: 800px;
+  background-color:black;
 } */
 
-.dashboard-container{
-  background-color:bisque;
+#myRange{
+  top:-250px;
+  position: relative;
+  right:0px;
+  width: 840px;
+  
 }
 
 
 .float-parent-element { 
   width: 100%; 
+  background-color:FloralWhite
 } 
 .float-child-element { 
   float: left; 
