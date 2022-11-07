@@ -1,4 +1,4 @@
-import { interpolateYlOrRd, scaleSequential, max,select,scaleQuantize,range,format,create} from 'd3';
+import { select,format} from 'd3';
 import { legendColor } from 'd3-svg-legend'
 
 

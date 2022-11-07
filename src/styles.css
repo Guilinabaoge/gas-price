@@ -1,5 +1,5 @@
 
-pre {
+/* pre {
   font-size: 7em;
 }
 
@@ -10,7 +10,7 @@ body {
 
 path {
   pointer-events:all;
-}
+} */
 
 path:hover {
   fill: red;
@@ -22,18 +22,19 @@ path:hover {
   right:800px
 }
 
-/* #dashboard-container{
-  top:-500px;
-  height: 800px;
-  background-color:black;
-} */
 
 #myRange{
   top:-250px;
   position: relative;
-  right:0px;
   width: 840px;
   
+}
+
+#gastype_select{
+  top:650px;
+  right:1400px;
+  font-size: 20px;
+  position: relative;
 }
 
 

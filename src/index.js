@@ -2,13 +2,15 @@ import React, { StrictMode} from 'react';
 import { createRoot } from "react-dom/client";
 import { scaleSequential, min,max,interpolateBlues,interpolateOranges} from 'd3';
 import { useMap } from './useMap';
-import { Marks } from './Marks';
+import { Marks,hex } from './Marks';
 import { useGas } from './useGas'; 
 import { useTest } from './useTest'; 
 import { ColorBar } from './ColorBar'
 import { HChart} from './HChart';
 import {svgPanZoom} from 'svg-pan-zoom'
 import * as tiger from "svg-pan-zoom";
+import {useHex} from './useHex'
+
 
 
 const width = 3072;
@@ -18,6 +20,7 @@ const App = () => {
   const map = useMap();
   const gas = useGas(); 
   const test = useTest();
+  const city_info = useHex()
 
 
   if (!map|| !gas) {
@@ -35,6 +38,7 @@ const App = () => {
 		.domain([min(gas,colorValue),max(gas,colorValue)]);
 
   ColorBar(colorScale);
+  hex(city_info)
 
   const hChart = HChart(test,{
     x: d => d.date,
@@ -46,9 +50,7 @@ const App = () => {
   if (document.getElementById("hbar") !== null && document.getElementById("hbar").hasChildNodes() === false && test!==null) {
     document.getElementById("hbar").appendChild(hChart)
     document.getElementById("hbar").firstChild.classList.add("red")
-    // console.log(document.getElementById("hbar").firstChild)
   } 
-  
   
   
   return (
@@ -68,7 +70,7 @@ const App = () => {
             </g>
         </svg>
       </div>
-      <select id="station_select" onchange="update_url()" class="dashboard" transform>
+      <select id="gastype_select" class="dashboard" transform>
         <option value="plza">Diesel</option>
         <option value="mont">E5</option>
         <option value="mont">E10</option>
