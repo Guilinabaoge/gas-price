@@ -1,6 +1,6 @@
 import React, { StrictMode} from 'react';
 import { createRoot } from "react-dom/client";
-import { scaleSequential, min,max,interpolateBlues,interpolateOranges} from 'd3';
+import { scaleSequential, min,max,interpolateBlues,interpolateOranges, geoMercator,geoIdentity, geoPath,} from 'd3';
 import { useMap } from './useMap';
 import { Marks,hex } from './Marks';
 import { useGas } from './useGas'; 
@@ -13,20 +13,35 @@ import {useHex} from './useHex'
 
 
 
-const width = 3072;
-const height = 1920;
+const width = 900;
+const height = 600;
 
 const App = () => {
   const map = useMap();
   const gas = useGas(); 
   const test = useTest();
-  const city_info = useHex()
 
+  const projection = geoIdentity()
+  .reflectY(true)
+  .fitSize([width, height], map)
 
-  if (!map|| !gas) {
+  const city_info = useHex(projection)
+
+  if (!map|| !gas||!city_info||!test) {
     return <pre>Loading...</pre>;
   }
   
+
+
+	// .center([10.40, 53.31])
+  // .scale([height]);
+  const path = geoPath(projection);
+
+
+  console.log(city_info);
+
+
+
   const rowByState = new Map();
   gas.forEach(d => {
   	rowByState.set(d.state,d);
@@ -37,8 +52,12 @@ const App = () => {
   const colorScale = scaleSequential(interpolateOranges)
 		.domain([min(gas,colorValue),max(gas,colorValue)]);
 
+
   // ColorBar(colorScale);
-  hex(city_info)
+
+ 
+  
+  hex(map,city_info)
 
   const hChart = HChart(test,{
     x: d => d.date,
@@ -63,6 +82,7 @@ const App = () => {
             <g id = "map_container">
                 <Marks 
                   map={map} 
+                  path = {path}
                   rowByState={rowByState}
                   colorScale = {colorScale}
                   colorValue = {colorValue}
@@ -70,7 +90,7 @@ const App = () => {
             </g>
         </svg>
       </div>
-      <select id="gastype_select" class="dashboard" transform>
+      <select id="gastype_select" class="dashboard">
         <option value="plza">Diesel</option>
         <option value="mont">E5</option>
         <option value="mont">E10</option>
