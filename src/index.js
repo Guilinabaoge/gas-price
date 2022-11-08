@@ -37,7 +37,7 @@ const App = () => {
   const colorScale = scaleSequential(interpolateOranges)
 		.domain([min(gas,colorValue),max(gas,colorValue)]);
 
-  ColorBar(colorScale);
+  // ColorBar(colorScale);
   hex(city_info)
 
   const hChart = HChart(test,{
@@ -58,10 +58,10 @@ const App = () => {
       <text id = "h-title">Germany diesel price change from 2015-2020</text>
       <div class="float-child-element" id="hbar">
       </div>
-      <div class="float-child-element">
+      <div class="float-child-element" id="test">
         <svg class="yellow" width={width} height={height} id="colorbar">
-            <g>
-                <Marks
+            <g id = "map_container">
+                <Marks 
                   map={map} 
                   rowByState={rowByState}
                   colorScale = {colorScale}

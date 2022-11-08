@@ -11,8 +11,6 @@ export const useHex = () => {
   useEffect(() => {
     const row = d => {
       let [x,y] = projection([Number(d.lat),Number(d.lng)]);
-      // d.x = Number(d.lat);
-      // d.y = Number(d.lng);
       d.x = x;
       d.y = y;
       d.diesel = Number(d.diesel)
@@ -21,6 +19,5 @@ export const useHex = () => {
 
     csv(csvUrl, row).then(setData);
   }, []);
-  console.log(data)
   return data;
 };

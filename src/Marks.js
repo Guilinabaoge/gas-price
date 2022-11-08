@@ -11,8 +11,8 @@ const height = 1920;
 
  
 export const projection = geoMercator()
-	.center([10.40, 53.31])
-  .scale([w]);
+	// .center([10.40, 53.31])
+  // .scale([w]);
 const path = geoPath(projection);
 
 
@@ -27,15 +27,13 @@ export const hex = (city_info)=>{
   .y(y => y.y)
   .radius(800 / 300);
  
-
-  
   const city_info_hex = _hexbin(city_info)
+
   // const hex_max = max(city_info_hex.map(o => sum(o.map(d => d.diesel))))
   const hex_max = 300000
 
-  console.log(city_info_hex)
-  console.log(select("#colorbar").append("g").selectAll("path"))
-  var map = select("#colorbar");
+  var map = select("#colorbar").select('#map_container').select("g.marks");
+  // var map = select("#test");
   map
   .append("g")
   .selectAll("path")
@@ -43,12 +41,12 @@ export const hex = (city_info)=>{
   .join("path")
   .attr('class', 'hex')
   .attr("transform", d => `translate(${d.x}, ${d.y})`)
-  .attr("transform", "translate(700,70) scale(6)")
+  // .attr("transform", "translate(-1150,-610) scale(6)")
   .attr("d", _hexbin.hexagon())
   .style("fill", o =>
     interpolateReds((sum(o.map(d => d.diesel)) / hex_max) ** 0.25)
   )
-
+  // console.log(select("#colorbar").selectAll("path"))
 
 }
   
@@ -65,8 +63,8 @@ export const Marks = ({
   <g className="marks">
     {map.features.map(feature => {
       const d = rowByState.get(feature.properties.NAME_1)
-      // console.log(projection([43.71035,-75.40213]))
-      return <path transform = "translate(-1150,-610) scale(3.4)" fill="white" stroke="black"  stroke-width="0.3" d={path(feature)}/> 
+      return <path fill="white" stroke="black"  stroke-width="0.3" d={path(feature)}/> 
+      // transform = "translate(-1150,-610) scale(3.4)"
       // onMouseOver={()=>setState(feature.properties.NAME_1)}
     })}
   </g>
