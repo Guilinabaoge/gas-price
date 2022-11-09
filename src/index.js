@@ -1,6 +1,6 @@
 import React, { StrictMode} from 'react';
 import { createRoot } from "react-dom/client";
-import { scaleSequential, min,max,interpolateBlues,interpolateOranges, geoMercator,geoIdentity, geoPath,} from 'd3';
+import { scaleSequential, min,max,interpolateBlues,interpolateOranges, geoMercator, geoPath,interpolateBuGn} from 'd3';
 import { useMap } from './useMap';
 import { Marks,hex } from './Marks';
 import { useGas } from './useGas'; 
@@ -21,26 +21,24 @@ const App = () => {
   const gas = useGas(); 
   const test = useTest();
 
-  const projection = geoIdentity()
-  .reflectY(true)
+  const projection = geoMercator()
+  // .reflect(true)
   .fitSize([width, height], map)
 
-  const city_info = useHex(projection)
+  const city_info = useHex()
 
   if (!map|| !gas||!city_info||!test) {
     return <pre>Loading...</pre>;
   }
+
+  const newcity = city_info.map((hi)=>{
+   let [x,y] = projection([Number(hi.lat), Number(hi.lng)]);
+   let diesel = hi.diesel
+   return {diesel,x,y}})
   
-
-
-	// .center([10.40, 53.31])
-  // .scale([height]);
+  const sort_city = newcity.sort((a, b) => a.diesel - b.diesel)
+ 
   const path = geoPath(projection);
-
-
-  console.log(city_info);
-
-
 
   const rowByState = new Map();
   gas.forEach(d => {
@@ -49,15 +47,16 @@ const App = () => {
   
   const colorValue = d => d.diesel;
 
-  const colorScale = scaleSequential(interpolateOranges)
+  const colorScale = scaleSequential(interpolateBuGn)
 		.domain([min(gas,colorValue),max(gas,colorValue)]);
 
 
-  // ColorBar(colorScale);
+  ColorBar(colorScale);
 
  
   
-  hex(map,city_info)
+  hex(width,height,map,sort_city)
+  console.log(sort_city)
 
   const hChart = HChart(test,{
     x: d => d.date,
@@ -90,12 +89,53 @@ const App = () => {
             </g>
         </svg>
       </div>
+      <label for="gastype_select">
+        Fueltype =
+      </label>
       <select id="gastype_select" class="dashboard">
-        <option value="plza">Diesel</option>
-        <option value="mont">E5</option>
+        <option >Diesel</option>
+        <option >E5</option>
         <option value="mont">E10</option>
       </select>
-      <input type="range" min="1" max="400" value="100" class="dashboard" id="myRange"/>
+
+      <label for="year_label" id="year_label">
+        Year =
+      </label>
+      <select id="year_select" class="dashboard">
+        <option >2015</option>
+        <option >2016</option>
+        <option >2017</option>
+        <option >2018</option>
+        <option >2019</option>
+        <option >2020</option>
+      </select>
+
+      <label for="month_select" id="month_label">
+        Month =
+      </label>
+      <select id="month_select" class="dashboard">
+        <option >1</option>
+        <option >2</option>
+        <option >3</option>
+        <option >4</option>
+        <option >5</option>
+        <option >6</option>
+      </select>
+
+
+      <label for="day_select" id="day_label">
+        Day =
+      </label>
+      <select id="day_select" >
+        <option >1</option>
+        <option >2</option>
+        <option >3</option>
+        <option >4</option>
+        <option >5</option>
+        <option >6</option>
+      </select>
+
+      <input type="range" min="1" max="400" value="100" id="myRange"/>
     </div>
     
   );

@@ -24,15 +24,56 @@ path:hover {
 
 
 #myRange{
-  top:-250px;
+  right: 310px;
+  top : -50px;
   position: relative;
-  width: 840px;
+  width: 890px;
   
 }
 
 #gastype_select{
-  top:650px;
-  right:1400px;
+  font-size: 20px;
+  position: relative;
+}
+
+#year_select{
+  left: 1640px;
+  top: -600px;
+  font-size: 20px;
+  position: relative;
+}
+
+#year_label{
+  left: 1640px;
+  top: -600px;
+  font-size: 20px;
+  position: relative;
+}
+
+#month_select{
+  left: 1503px;
+  top: -570px;
+  font-size: 20px;
+  position: relative;
+}
+
+#month_label{
+  left: 1500px;
+  top: -570px;
+  font-size: 20px;
+  position: relative;
+}
+
+#day_select{
+  left: 1420px;
+  top: -540px;
+  font-size: 20px;
+  position: relative;
+}
+
+#day_label{
+  left: 1420px;
+  top: -540px;
   font-size: 20px;
   position: relative;
 }

@@ -28,7 +28,7 @@ export function HChart(data, {
   yDomain, // [ymin, ymax]
   yRange = [size, size - bands * (size - padding)], // [bottom, top]
   zDomain, // array of z-values
-  scheme = d3.schemeOranges, // color scheme; shorthand for colors
+  scheme = d3.schemeBuGn, // color scheme; shorthand for colors
   colors = scheme[Math.max(3, bands)], // an array of colors
 } = {}) {
   // console.log(Date(data[0]['date']))
