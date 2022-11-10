@@ -1,52 +1,70 @@
-import { geoMercator, geoPath,select,interpolateReds,sum,max,json,interpolateBuGn } from 'd3';
+import * as d3 from "d3"
 import './styles.css'
 import React from 'react';
 import {hexbin} from 'd3-hexbin';
-import { useMap } from './useMap';
 
-export const hex = (width,height,map,city_info)=>{
-  var _hexbin = hexbin()
-  .extent([[0, 0], [width, height]])
+
+export function Hexmap (map_width,height,proj,states,city_info){
+  
+  var _hexbin =  hexbin()
+  .extent([[0, 0], [map_width, height]])
   .x(x => x.x)
   .y(y => y.y)
-  .radius(10);
+  .radius(map_width/80);
  
-  const city_info_hex = _hexbin(city_info)
+ 
+  let div = d3
+    .create('div')
+    .style("width", `${map_width}px`)
+    .style("height", `${height}px`)
+    .style('overflow', 'hidden');
 
-  const hex_max = max(city_info_hex.map(o => sum(o.map(d => d.diesel))))
+  let svg = div
+    .append('svg')
+    .style('overflow', 'hidden')
+    .attr("viewBox", `0,0,${map_width},${height}`);
 
-  var map = select("#colorbar").select("#map_container");
-  map
-  .append("g")
-  .selectAll("path")
-  .data(city_info_hex)
-  .join("path")
-  .attr('class', 'hex')
-  .attr("transform", d => `translate(${d.x-2000}, ${d.y-2400})`)
-  .attr("d", _hexbin.hexagon())
-  .style("fill", o =>
-    interpolateBuGn((sum(o.map(d => d.diesel)) / hex_max) ** 0.25)
-  )
-  .style("opacity", 0.6)
+  let path = d3.geoPath().projection(proj);
 
+  let map = svg.append('g');
+
+  console.log(map)
+    
+    map
+    .selectAll("path")
+    .data(states.features)
+    .join("path")
+    .attr('class', 'state')
+    .attr('d', path)
+    .style("fill", function(d) {
+      return d3.interpolateBlues(
+        0
+      );
+    })
+    .attr("stroke-width", '1.5px')
+    .attr("stroke", "#ddd")
+    .attr("stroke-linejoin", "round")
+    .style("background-color","white")
+
+
+   const city_info_hex = _hexbin(city_info)
+   const hex_max = d3.max(city_info_hex.map(o => d3.sum(o.map(d => d.diesel))))
+    let hexes = map
+      .append("g")
+      .selectAll("path")
+      .data(city_info_hex)
+      .join("path")
+      .attr('class', 'hex')
+      .attr("transform", d => `translate(${d.x-2000}, ${d.y-2400})`)
+      .attr("d", _hexbin.hexagon())
+      .style("fill", o =>
+          d3.interpolateBuGn((d3.sum(o.map(d => d.diesel)) / hex_max) ** 0.25)
+      )
+      .style("opacity", 0.7)
+      .style("stroke", "#fff")
+      .attr("stroke-width", 0.4)
+  //   .attr('title', title_table);
+  // hexes.nodes().forEach(d => tippy(d, {}));
+
+  return div.node();
 }
-  
-
-export const Marks = ({
-  map,
-  rowByState,
-  path,
-  colorScale,
-  colorValue
-}) => (
-  <g className="marks">
-    {map.features.map(feature => {
-      const d = rowByState.get(feature.properties.NAME_1)
-      return <path fill="white" stroke="black" transform = "scale(0.9)" stroke-width="0.3" d={path(feature)}/> 
-      // transform = "translate(-1150,-610) scale(3.4)"
-      // onMouseOver={()=>setState(feature.properties.NAME_1)}
-    })}
-  </g>
-);
-
-

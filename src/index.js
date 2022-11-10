@@ -2,14 +2,14 @@ import React, { StrictMode} from 'react';
 import { createRoot } from "react-dom/client";
 import { scaleSequential, min,max,interpolateBlues,interpolateOranges, geoMercator, geoPath,interpolateBuGn} from 'd3';
 import { useMap } from './useMap';
-import { Marks,hex } from './Marks';
 import { useGas } from './useGas'; 
 import { useTest } from './useTest'; 
 import { ColorBar } from './ColorBar'
 import { HChart} from './HChart';
-import {svgPanZoom} from 'svg-pan-zoom'
+import {svgPanZoom} from 'svg-pan-zoom';
 import * as tiger from "svg-pan-zoom";
-import {useHex} from './useHex'
+import {useHex} from './useHex';
+import {Hexmap} from './Marks';
 
 
 
@@ -37,7 +37,6 @@ const App = () => {
    return {diesel,x,y}})
   
   const sort_city = newcity.sort((a, b) => a.diesel - b.diesel)
- 
   const path = geoPath(projection);
 
   const rowByState = new Map();
@@ -51,12 +50,7 @@ const App = () => {
 		.domain([min(gas,colorValue),max(gas,colorValue)]);
 
 
-  ColorBar(colorScale);
-
- 
   
-  hex(width,height,map,sort_city)
-  console.log(sort_city)
 
   const hChart = HChart(test,{
     x: d => d.date,
@@ -64,11 +58,21 @@ const App = () => {
     z: d => d.name,
   });
 
+  const hexmap = Hexmap(width,height,projection,map,sort_city);
 
-  if (document.getElementById("hbar") !== null && document.getElementById("hbar").hasChildNodes() === false && test!==null) {
+
+  //TODO refactor 
+  if (document.getElementById("hbar") !== null && document.getElementById("hbar").hasChildNodes() === false) {
     document.getElementById("hbar").appendChild(hChart)
     document.getElementById("hbar").firstChild.classList.add("red")
   } 
+
+  if (document.getElementById("hexmap") !== null && document.getElementById("hexmap").hasChildNodes() === false){
+    document.getElementById("hexmap").appendChild(hexmap)
+  }
+
+  //Fix color bar
+  ColorBar(colorScale);
   
   
   return (
@@ -76,18 +80,7 @@ const App = () => {
       <text id = "h-title">Germany diesel price change from 2015-2020</text>
       <div class="float-child-element" id="hbar">
       </div>
-      <div class="float-child-element" id="test">
-        <svg class="yellow" width={width} height={height} id="colorbar">
-            <g id = "map_container">
-                <Marks 
-                  map={map} 
-                  path = {path}
-                  rowByState={rowByState}
-                  colorScale = {colorScale}
-                  colorValue = {colorValue}
-                />
-            </g>
-        </svg>
+      <div class="float-child-element" id="hexmap">
       </div>
       <label for="gastype_select">
         Fueltype =
