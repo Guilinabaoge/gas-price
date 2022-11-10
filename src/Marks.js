@@ -15,7 +15,7 @@ export const hex = (width,height,map,city_info)=>{
 
   const hex_max = max(city_info_hex.map(o => sum(o.map(d => d.diesel))))
 
-  var map = select("#colorbar");
+  var map = select("#colorbar").select("#map_container");
   map
   .append("g")
   .selectAll("path")
