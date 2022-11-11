@@ -1,17 +1,4 @@
 
-/* pre {
-  font-size: 7em;
-}
-
-body {
-
-  position: relative;
-}
-
-path {
-  pointer-events:all;
-} */
-
 path:hover {
   fill: red;
 }
@@ -23,7 +10,7 @@ path:hover {
 }
 
 
-#myRange{
+#time{
   right: 310px;
   top : -50px;
   position: relative;

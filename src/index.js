@@ -1,6 +1,6 @@
 import React, { StrictMode} from 'react';
 import { createRoot } from "react-dom/client";
-import { scaleSequential, min,max,interpolateBlues,interpolateOranges, geoMercator, geoPath,interpolateBuGn} from 'd3';
+import { scaleSequential, min,max,select, geoMercator, geoPath,interpolateBuGn} from 'd3';
 import { useMap } from './useMap';
 import { useGas } from './useGas'; 
 import { useTest } from './useTest'; 
@@ -73,6 +73,14 @@ const App = () => {
 
   //Fix color bar
   ColorBar(colorScale);
+
+  select("#time").on("input",make_graph);
+
+
+  //TODO scroll bar
+  function make_graph(){
+    console.log("Hi")
+  }
   
   
   return (
@@ -128,7 +136,7 @@ const App = () => {
         <option >6</option>
       </select>
 
-      <input type="range" min="1" max="400" value="100" id="myRange"/>
+      <input type="range" id="time" min="240" max="1440"  value="460"/>
     </div>
     
   );
