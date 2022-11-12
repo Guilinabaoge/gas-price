@@ -74,11 +74,21 @@ const App = () => {
   //Fix color bar
   ColorBar(colorScale);
 
+
   select("#time").on("input",make_graph);
+
+  function update_slider(time) {
+    var dateObj = new Date();
+    dateObj.setHours(Math.floor(time/60));
+    dateObj.setMinutes(time % 60);
+    select("#prettyTime")
+      .text(dateObj.toTimeString().substring(0, 5));
+  }
 
 
   //TODO scroll bar
   function make_graph(){
+    update_slider(+document.getElementById("time").value)
     console.log("Hi")
   }
   
@@ -136,7 +146,11 @@ const App = () => {
         <option >6</option>
       </select>
 
-      <input type="range" id="time" min="240" max="1440"  value="460"/>
+
+      <label for="time">
+         Time = <span id="prettyTime">...</span>
+       </label>
+      <input type="range" id="time" min="240" max="1440" />
     </div>
     
   );
