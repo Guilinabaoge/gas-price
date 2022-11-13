@@ -22,14 +22,12 @@ export function Hexmap (map_width,height,proj,states,city_info){
   let svg = div
     .append('svg')
     .style('overflow', 'hidden')
-    .attr("viewBox", `0,0,${map_width},${height}`);
+    .attr("viewBox", `0,0,${map_width},${height}`)
+    .attr("id","basemap");
 
   let path = d3.geoPath().projection(proj);
 
   let map = svg.append('g');
-
-  console.log(map)
-    
     map
     .selectAll("path")
     .data(states.features)

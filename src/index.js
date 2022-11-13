@@ -37,7 +37,6 @@ const App = () => {
    return {diesel,x,y}})
   
   const sort_city = newcity.sort((a, b) => a.diesel - b.diesel)
-  const path = geoPath(projection);
 
   const rowByState = new Map();
   gas.forEach(d => {
@@ -48,9 +47,6 @@ const App = () => {
 
   const colorScale = scaleSequential(interpolateBuGn)
 		.domain([min(gas,colorValue),max(gas,colorValue)]);
-
-
-  
 
   const hChart = HChart(test,{
     x: d => d.date,
@@ -85,13 +81,24 @@ const App = () => {
       .text(dateObj.toTimeString().substring(0, 5));
   }
 
-
   //TODO scroll bar
   function make_graph(){
     update_slider(+document.getElementById("time").value)
     console.log("Hi")
   }
+
+  const basemap = select("#basemap")
+
   
+  city_info.map((d)=>{
+    const [x, y] = projection([Number(d.lng), Number(d.lat)]);
+    basemap.append('circle').attr("cx",`${x}`).attr("cy",`${y}`).attr("r","1");
+  })
+  console.log(basemap)
+
+
+
+
   
   return (
     <div class="float-parent-element">
