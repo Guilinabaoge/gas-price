@@ -73,6 +73,8 @@ const App = () => {
 
   select("#time").on("input",make_graph);
 
+
+  //TODO change the slider domain to 2015-01-01 --> 2020-01-01
   function update_slider(time) {
     var dateObj = new Date();
     dateObj.setHours(Math.floor(time/60));
@@ -95,8 +97,6 @@ const App = () => {
     basemap.append('circle').attr("cx",`${x}`).attr("cy",`${y}`).attr("r","1");
   })
   console.log(basemap)
-
-
 
 
   
