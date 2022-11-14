@@ -9,7 +9,7 @@ import { HChart} from './HChart';
 import {svgPanZoom} from 'svg-pan-zoom';
 import * as tiger from "svg-pan-zoom";
 import {useHex} from './useHex';
-import {Hexmap} from './Marks';
+import {Hexmap} from './Basemap_Hexbin';
 
 
 
@@ -90,13 +90,11 @@ const App = () => {
   }
 
   const basemap = select("#basemap")
-
-  
   city_info.map((d)=>{
     const [x, y] = projection([Number(d.lng), Number(d.lat)]);
     basemap.append('circle').attr("cx",`${x}`).attr("cy",`${y}`).attr("r","1");
   })
-  console.log(basemap)
+
 
 
   
