@@ -36,7 +36,7 @@ const App = () => {
    let diesel = hi.diesel
    return {diesel,x,y}})
   
-  const sort_city = newcity.sort((a, b) => a.diesel - b.diesel)
+  // const sort_city = newcity.sort((a, b) => a.diesel - b.diesel)
 
   const rowByState = new Map();
   gas.forEach(d => {
@@ -54,7 +54,15 @@ const App = () => {
     z: d => d.name,
   });
 
-  const hexmap = Hexmap(width,height,projection,map,sort_city);
+  // const hexmap = Hexmap(width,height,projection,map,sort_city);
+  let projected_points = city_info.map((d)=>{
+    
+    const [x, y] = projection([Number(d.lng), Number(d.lat)]);
+    let diesel = d.diesel;
+    return {diesel,x,y};
+  });
+
+  const hexmap = Hexmap(width,height,projection,map,projected_points);
 
 
   //TODO refactor 
@@ -90,9 +98,9 @@ const App = () => {
   }
 
   const basemap = select("#basemap")
-  city_info.map((d)=>{
-    const [x, y] = projection([Number(d.lng), Number(d.lat)]);
-    basemap.append('circle').attr("cx",`${x}`).attr("cy",`${y}`).attr("r","1");
+
+  projected_points.map((d)=>{
+    // basemap.append('circle').attr("cx",`${d.x}`).attr("cy",`${d.y}`).attr("r","1");
   })
 
 
