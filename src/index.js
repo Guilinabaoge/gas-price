@@ -1,16 +1,14 @@
 import React, { StrictMode} from 'react';
 import { createRoot } from "react-dom/client";
 import { scaleSequential, min,max,select, geoMercator, geoPath,interpolateBuGn} from 'd3';
-import { useMap } from './useMap';
-import { useGas } from './useGas'; 
-import { useTest } from './useTest'; 
+import { useMap } from './useData/useMap';
+import { useGas } from './useData/useGas'; 
+import { useTest } from './useData/useTest'; 
 import { ColorBar } from './ColorBar'
-import { HChart} from './HChart';
-import {svgPanZoom} from 'svg-pan-zoom';
-import * as tiger from "svg-pan-zoom";
-import {useHex} from './useHex';
+import { HChart} from './horizonMap/HChart';
+import {useHex} from './useData/useHex';
 import {Hexmap} from './Basemap_Hexbin';
-
+import {map_live} from './mapbox/mapbox'
 
 
 const width = 900;
@@ -31,12 +29,6 @@ const App = () => {
     return <pre>Loading...</pre>;
   }
 
-  const newcity = city_info.map((hi)=>{
-   let [x,y] = projection([Number(hi.lat), Number(hi.lng)]);
-   let diesel = hi.diesel
-   return {diesel,x,y}})
-  
-  // const sort_city = newcity.sort((a, b) => a.diesel - b.diesel)
 
   const rowByState = new Map();
   gas.forEach(d => {
@@ -54,7 +46,6 @@ const App = () => {
     z: d => d.name,
   });
 
-  // const hexmap = Hexmap(width,height,projection,map,sort_city);
   let projected_points = city_info.map((d)=>{
     
     const [x, y] = projection([Number(d.lng), Number(d.lat)]);
@@ -66,18 +57,21 @@ const App = () => {
 
 
   //TODO refactor 
-  if (document.getElementById("hbar") !== null && document.getElementById("hbar").hasChildNodes() === false) {
+  if (document.getElementById("hbar") !== null &&
+      document.getElementById("map") !== null &&
+     document.getElementById("hbar").hasChildNodes() === false &&
+     document.getElementById("hexmap") !== null &&
+     document.getElementById("hexmap").hasChildNodes() === false
+     ) {
     document.getElementById("hbar").appendChild(hChart)
     document.getElementById("hbar").firstChild.classList.add("red")
+    document.getElementById("hexmap").appendChild(hexmap)
+    map_live()
   } 
 
-  if (document.getElementById("hexmap") !== null && document.getElementById("hexmap").hasChildNodes() === false){
-    document.getElementById("hexmap").appendChild(hexmap)
-  }
 
-  //Fix color bar
+  //TODO Fix color bar
   ColorBar(colorScale);
-
 
   select("#time").on("input",make_graph);
 
@@ -97,15 +91,12 @@ const App = () => {
     console.log("Hi")
   }
 
-  const basemap = select("#basemap")
-
-  projected_points.map((d)=>{
-    // basemap.append('circle').attr("cx",`${d.x}`).attr("cy",`${d.y}`).attr("r","1");
-  })
-
+  // const basemap = select("#basemap")
+  // projected_points.map((d)=>{
+  //   basemap.append('circle').attr("cx",`${d.x}`).attr("cy",`${d.y}`).attr("r","1");
+  // })
 
 
-  
   return (
     <div class="float-parent-element">
       <text id = "h-title">Germany diesel price change from 2015-2020</text>
@@ -113,7 +104,11 @@ const App = () => {
       </div>
       <div class="float-child-element" id="hexmap">
       </div>
-      <label for="gastype_select">
+      <div id="map"  height="600px" ></div>
+      
+
+      {/* TODO refactor */}
+      {/* <label for="gastype_select">
         Fueltype =
       </label>
       <select id="gastype_select" class="dashboard">
@@ -163,7 +158,7 @@ const App = () => {
       <label for="time">
          Time = <span id="prettyTime">...</span>
        </label>
-      <input type="range" id="time" min="240" max="1440" />
+      <input type="range" id="time" min="240" max="1440" /> */}
     </div>
     
   );
