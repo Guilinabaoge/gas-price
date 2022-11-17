@@ -9,7 +9,7 @@ export function Hexmap (map_width,height,proj,states,city_info){
   .extent([[0, 0], [map_width, height]])
   .x(x => x.x)
   .y(y => y.y)
-  .radius(map_width/80);
+  .radius(map_width/150);
  
  
   let div = d3
@@ -38,8 +38,8 @@ export function Hexmap (map_width,height,proj,states,city_info){
         0
       );
     })
-    .attr("stroke-width", '1.5px')
-    .attr("stroke", "#ddd")
+    .attr("stroke-width", 'px')
+    .attr("stroke", "black")
     .attr("stroke-linejoin", "round")
     .style("background-color","white")
 

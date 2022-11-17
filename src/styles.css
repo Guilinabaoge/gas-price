@@ -65,7 +65,6 @@ path:hover {
   position: relative;
 }
 
-
 .float-parent-element { 
   width: 100%; 
   background-color:FloralWhite
@@ -84,5 +83,11 @@ path:hover {
 } 
 .yellow { 
   margin-left: 0%; 
+}
+
+.map{
+  height:600px; 
+  width:600px;
+  position: relative;
 }
 
