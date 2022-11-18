@@ -1,0 +1,20 @@
+
+.overview_level { 
+    display: grid;
+    grid-template-columns: 500px 1fr;
+    /* grid-gap: 20px; */
+  } 
+  
+  .overview_level_child{
+    border: 3px solid black;
+  }
+  
+  #horizon_graph{
+    width: 100%; 
+  }
+
+  #introduction{
+    white-space: pre-line;
+    font-size:30px
+  }
+  

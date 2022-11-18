@@ -4,10 +4,11 @@ import { scaleSequential, min,max,select, geoMercator, geoPath,interpolateBuGn} 
 import { useMap } from './useData/useMap';
 import { useGas } from './useData/useGas'; 
 import { useTest } from './useData/useTest'; 
-import { ColorBar } from './ColorBar'
+import { ColorBar } from './ColorBar';
 import { HChart} from './horizonMap/HChart';
 import {useHex} from './useData/useHex';
 import {Hexmap} from './Basemap_Hexbin';
+import './overview.css';
 import {map_live} from './mapbox/mapbox'
 
 
@@ -28,7 +29,6 @@ const App = () => {
   if (!map|| !gas||!city_info||!test) {
     return <pre>Loading...</pre>;
   }
-
 
   const rowByState = new Map();
   gas.forEach(d => {
@@ -60,8 +60,8 @@ const App = () => {
   if (document.getElementById("horizon_container") !== null &&
       document.getElementById("map_container") !== null &&
      document.getElementById("horizon_container").hasChildNodes() === false &&
-     document.getElementById("hexmap_container") !== null &&
-     document.getElementById("hexmap_container").hasChildNodes() === false
+     document.getElementById("hexmap_container") !== null 
+    //  && document.getElementById("hexmap_container").hasChildNodes() === false
      ) {
     document.getElementById("horizon_container").appendChild(hChart)
     document.getElementById("horizon_container").firstChild.setAttribute("id", "horizon_graph")
@@ -100,14 +100,32 @@ const App = () => {
   return (
     <div class="root">
       {/* <text id = "h-title">Germany diesel price change from 2015-2020</text> */}
-      <div id="horizon_container"></div>
+
+      <div class="overview_level">
+        <div class ="overview_level_child" id="introduction_container">
+          <p id="introduction">{`This is an visualization for fuel price of germany during 2015-2020.\nThe horizon graph shows the overview a the whole dataset.
+                The hexbin map and live map show the fuel price of specific date. 
+                There goals of this visualization are: 
+                1. Show the overview of the trend of the gas price. 
+                2. Shows the nearby gas stations of a given coordinate, and help user to find the historically cheapest station. 
+
+                Here are the list of interactions in this visualization: 
+                1. Swith the fuel type.
+                2. Switch the time`}
+          </p>
+        </div>
+        <div class ="overview_level_child" id="horizon_container"></div>
+      </div>
+      
 
       <div class="map_level">
         <div class = "map_level_child" id="map_dashboard"></div>
-        <div class = "map_level_child" id="hexmap_container"></div>
+        <div class = "map_level_child" id="hexmap_container">
+          
+          {/* <input type="range" id="time" min="240" max="1440" /> */}
+        </div>
         <div class = "map_level_child" id="map_container" ></div>
         <div class = "map_level_child" id="plot_container" ></div>
-      
       </div>
      
 

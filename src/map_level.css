@@ -1,0 +1,25 @@
+
+
+
+.map_level { 
+  display: grid;
+  width: 100%;
+  grid-template-columns: 200px 600px 1fr 1fr;
+  /* grid-gap: 20px; */
+} 
+
+
+.map_level_child{
+  border: 3px solid black;
+
+}
+
+#hexmap{
+  left: -25%;
+  position:relative;
+}
+
+
+
+
+

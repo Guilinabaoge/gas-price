@@ -8,12 +8,11 @@ export function map_live(){
     // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
     // TODO use the local css instead
     style: 'mapbox://styles/mapbox/streets-v11', // style URL
-    center: [10.404954,50.520008], // starting position [lng, lat]
-    zoom: 6, // starting zoom
+    center: [10.40,51.520008], // starting position [lng, lat]
+    zoom: 5, // starting zoom
     projection: 'mercator', // display the map as a 3D globe
-    scrollZoom: false
+    // scrollZoom: false
     });
-    
     map.on('style.load', () => {
     map.setFog({}); // Set the default atmosphere style
     });

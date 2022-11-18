@@ -1,7 +1,6 @@
 import * as d3 from "d3"
-import './styles.css'
+import './map_level.css'
 import {hexbin} from 'd3-hexbin';
-
 
 export function Hexmap (map_width,height,proj,states,city_info){
   
