@@ -1,8 +1,4 @@
-
-path:hover {
-  fill: red;
-}
-
+/* 
 #h-title{
   font-size: 40px;
   position: relative;
@@ -63,31 +59,37 @@ path:hover {
   top: -540px;
   font-size: 20px;
   position: relative;
-}
+} */
 
-.float-parent-element { 
-  width: 100%; 
-  background-color:FloralWhite
+.map_level { 
+  display: grid;
+  width: 100%;
+  grid-template-columns: 200px 600px 1fr 1fr;
+  /* grid-gap: 20px; */
 } 
-.float-child-element { 
+
+.map_level_child{
+  border: 2px solid red;
   float: left; 
-  width: 50%; 
-} 
-.red { 
-  transform: scale(1);
-  margin-left: 0%;
-  margin-top: 10%; 
-  width: 1200px;
-  background-color:bisque
-  
-} 
-.yellow { 
-  margin-left: 0%; 
 }
 
-.map{
-  height:600px; 
-  width:600px;
-  position: relative;
+/* #hexmap_container{
+  width: 60%; 
+} */
+
+#hexmap{
+  left: -25%;
+  position:relative;
 }
+
+#horizon_container{
+  border: 2px solid red;
+}
+
+#horizon_graph{
+  width: 50%; 
+  border: 2px solid red;
+}
+
+
 

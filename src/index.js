@@ -57,15 +57,16 @@ const App = () => {
 
 
   //TODO refactor 
-  if (document.getElementById("hbar") !== null &&
-      document.getElementById("map") !== null &&
-     document.getElementById("hbar").hasChildNodes() === false &&
-     document.getElementById("hexmap") !== null &&
-     document.getElementById("hexmap").hasChildNodes() === false
+  if (document.getElementById("horizon_container") !== null &&
+      document.getElementById("map_container") !== null &&
+     document.getElementById("horizon_container").hasChildNodes() === false &&
+     document.getElementById("hexmap_container") !== null &&
+     document.getElementById("hexmap_container").hasChildNodes() === false
      ) {
-    document.getElementById("hbar").appendChild(hChart)
-    document.getElementById("hbar").firstChild.classList.add("red")
-    document.getElementById("hexmap").appendChild(hexmap)
+    document.getElementById("horizon_container").appendChild(hChart)
+    document.getElementById("horizon_container").firstChild.setAttribute("id", "horizon_graph")
+    document.getElementById("hexmap_container").appendChild(hexmap)
+    document.getElementById("hexmap_container").firstChild.setAttribute("id", "hexmap")
     map_live()
   } 
 
@@ -88,7 +89,6 @@ const App = () => {
   //TODO scroll bar
   function make_graph(){
     update_slider(+document.getElementById("time").value)
-    console.log("Hi")
   }
 
   // const basemap = select("#basemap")
@@ -98,13 +98,20 @@ const App = () => {
 
 
   return (
-    <div class="float-parent-element">
-      <text id = "h-title">Germany diesel price change from 2015-2020</text>
-      <div class="float-child-element" id="hbar">
+    <div class="root">
+      {/* <text id = "h-title">Germany diesel price change from 2015-2020</text> */}
+      <div id="horizon_container"></div>
+
+      <div class="map_level">
+        <div class = "map_level_child" id="map_dashboard"></div>
+        <div class = "map_level_child" id="hexmap_container"></div>
+        <div class = "map_level_child" id="map_container" ></div>
+        <div class = "map_level_child" id="plot_container" ></div>
+      
       </div>
-      <div class="float-child-element" id="hexmap">
-      </div>
-      <div id="map"  height="600px" ></div>
+     
+
+      
       
 
       {/* TODO refactor */}
