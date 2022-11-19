@@ -47,7 +47,6 @@ const App = () => {
   });
 
   let projected_points = city_info.map((d)=>{
-    
     const [x, y] = projection([Number(d.lng), Number(d.lat)]);
     let diesel = d.diesel;
     return {diesel,x,y};
@@ -67,7 +66,7 @@ const App = () => {
     document.getElementById("horizon_container").firstChild.setAttribute("id", "horizon_graph")
     document.getElementById("hexmap_container").appendChild(hexmap)
     document.getElementById("hexmap_container").firstChild.setAttribute("id", "hexmap")
-    map_live()
+    map_live(city_info)
   } 
 
 
@@ -80,10 +79,13 @@ const App = () => {
   //TODO change the slider domain to 2015-01-01 --> 2020-01-01
   function update_slider(time) {
     var dateObj = new Date();
-    dateObj.setHours(Math.floor(time/60));
-    dateObj.setMinutes(time % 60);
+    dateObj.setFullYear(2015,1,1);
+    dateObj.setDate(dateObj.getDate()+time)
+    const year = dateObj.getFullYear().toString()
+    const mont = dateObj.getMonth().toString()
+    const day = dateObj.getDate().toString()
     select("#prettyTime")
-      .text(dateObj.toTimeString().substring(0, 5));
+      .text(`${day}-${mont}-${year}`);
   }
 
   //TODO scroll bar
@@ -120,10 +122,17 @@ const App = () => {
 
       <div class="map_level">
         <div class = "map_level_child" id="map_dashboard"></div>
-        <div class = "map_level_child" id="hexmap_container">
-          
-          {/* <input type="range" id="time" min="240" max="1440" /> */}
+          <div class = "map_level_child" id="hex_wrapper">
+              <div class = "map_level_child" id="hexmap_container"></div>
+              <div class = "map_level_child">
+              {/* <label for="time">Date = <span id="prettyTime">01-01-2015</span></label> */}
+              <input type="range" id="time" min="0" max="1826" />  
+              </div>
+              <text>year</text>
+              <text>month</text>
+              <text>day</text>
         </div>
+        
         <div class = "map_level_child" id="map_container" ></div>
         <div class = "map_level_child" id="plot_container" ></div>
       </div>

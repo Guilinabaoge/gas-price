@@ -8,11 +8,12 @@ export const useHex = () => {
   const [data, setData] = useState(null);
   
   useEffect(() => {
+    //TODO make the type cast of lng and lat here
     const row = d => {
       d.diesel = Number(d.diesel)
       return d;
     };
-
+    // [Number(d.lng), Number(d.lat)]
     csv(csvUrl, row).then(setData);
   }, []);
   return data;

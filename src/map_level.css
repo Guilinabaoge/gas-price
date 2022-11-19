@@ -4,7 +4,7 @@
 .map_level { 
   display: grid;
   width: 100%;
-  grid-template-columns: 200px 600px 1fr 1fr;
+  grid-template-columns: 150px 600px 1.5fr 1fr;
   /* grid-gap: 20px; */
 } 
 
@@ -18,6 +18,12 @@
   left: -25%;
   position:relative;
 }
+
+#time{
+  width: 100%;
+}
+
+
 
 
 
