@@ -1,6 +1,6 @@
 import React, { StrictMode} from 'react';
 import { createRoot } from "react-dom/client";
-import { scaleSequential, min,max,select, geoMercator, geoPath,interpolateBuGn} from 'd3';
+import { scaleSequential, min,max,select, geoMercator, selectAll,interpolateBuGn} from 'd3';
 import { useMap } from './useData/useMap';
 import { useGas } from './useData/useGas'; 
 import { useTest } from './useData/useTest'; 
@@ -9,7 +9,8 @@ import { HChart} from './horizonMap/HChart';
 import {useHex} from './useData/useHex';
 import {Hexmap} from './Basemap_Hexbin';
 import './overview.css';
-import {map_live} from './mapbox/mapbox'
+import {map_live,addMarker} from './mapbox/mapbox'
+
 
 
 const width = 900;
@@ -74,6 +75,11 @@ const App = () => {
   ColorBar(colorScale);
 
   select("#time").on("input",make_graph);
+  selectAll(".hex").on("click",clickHex)
+
+  function clickHex(){
+    console.log("Hi")
+  }
 
 
   //TODO change the slider domain to 2015-01-01 --> 2020-01-01
@@ -85,7 +91,7 @@ const App = () => {
     const mont = dateObj.getMonth().toString()
     const day = dateObj.getDate().toString()
     select("#prettyTime")
-      .text(`${day}-${mont}-${year}`);
+      .text(`${day}   ${mont}   ${year}`);
   }
 
   //TODO scroll bar
@@ -101,8 +107,6 @@ const App = () => {
 
   return (
     <div class="root">
-      {/* <text id = "h-title">Germany diesel price change from 2015-2020</text> */}
-
       <div class="overview_level">
         <div class ="overview_level_child" id="introduction_container">
           <p id="introduction">{`This is an visualization for fuel price of germany during 2015-2020.\nThe horizon graph shows the overview a the whole dataset.
@@ -121,16 +125,16 @@ const App = () => {
       
 
       <div class="map_level">
-        <div class = "map_level_child" id="map_dashboard"></div>
+        {/* <div class = "map_level_child" id="map_dashboard"></div> */}
           <div class = "map_level_child" id="hex_wrapper">
               <div class = "map_level_child" id="hexmap_container"></div>
               <div class = "map_level_child">
-              {/* <label for="time">Date = <span id="prettyTime">01-01-2015</span></label> */}
               <input type="range" id="time" min="0" max="1826" />  
+              <label for="time">Date = <span id="prettyTime">01-01-2015</span></label>
               </div>
-              <text>year</text>
+              {/* <text>year</text>
               <text>month</text>
-              <text>day</text>
+              <text>day</text> */}
         </div>
         
         <div class = "map_level_child" id="map_container" ></div>

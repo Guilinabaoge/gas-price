@@ -4,7 +4,7 @@
 .map_level { 
   display: grid;
   width: 100%;
-  grid-template-columns: 150px 600px 1.5fr 1fr;
+  grid-template-columns: 600px 1.5fr 1fr;
   /* grid-gap: 20px; */
 } 
 

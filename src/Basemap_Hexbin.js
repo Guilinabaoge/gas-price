@@ -1,6 +1,6 @@
 import * as d3 from "d3"
 import './map_level.css'
-import {hexbin} from 'd3-hexbin';
+import {hexbin} from 'd3-hexbin'
 
 export function Hexmap (map_width,height,proj,states,city_info){
   
@@ -8,8 +8,7 @@ export function Hexmap (map_width,height,proj,states,city_info){
   .extent([[0, 0], [map_width, height]])
   .x(x => x.x)
   .y(y => y.y)
-  .radius(map_width/150);
- 
+  .radius(map_width/100);
  
   let div = d3
     .create('div')
@@ -42,6 +41,7 @@ export function Hexmap (map_width,height,proj,states,city_info){
     .attr("stroke-linejoin", "round")
     .style("background-color","white")
 
+  
 
    const city_info_hex = _hexbin(city_info)
    const hex_max = d3.max(city_info_hex.map(o => d3.sum(o.map(d => d.diesel))))
@@ -56,14 +56,10 @@ export function Hexmap (map_width,height,proj,states,city_info){
       .style("fill", o =>
           d3.interpolateBuGn((d3.sum(o.map(d => d.diesel)) / hex_max) ** 0.25)
       )
-      .style("opacity", 0.7)
+      .style("opacity", 1)
       .style("stroke", "#fff")
       .attr("stroke-width", 0.4)
 
-
-
-  //   .attr('title', title_table);
-  // hexes.nodes().forEach(d => tippy(d, {}));
 
   return div.node();
 }

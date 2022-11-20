@@ -1,5 +1,16 @@
 import * as mapboxgl from 'mapbox-gl';
 import './mapbox-gl.css';
+
+var map = null
+
+var marker = new mapboxgl.Marker();
+
+function addMarker(event){
+  var coordinates = event.lngLat;
+  console.log('Lng:', coordinates.lng, 'Lat:', coordinates.lat);
+  marker.setLngLat(coordinates).addTo(map);
+}
+
 export function map_live(gas_stations){
 
     // const map = document.getElementById("map_container")
@@ -7,24 +18,21 @@ export function map_live(gas_stations){
     const map_live = new mapboxgl.Map({
     container: 'map_container', // container ID
     // Choose from Mapbox's core styles, or make your own style with Mapbox Studio
-    // TODO use the local css instead
     style: 'mapbox://styles/mapbox/streets-v11', // style URL
     center: [10.40,51.520008], // starting position [lng, lat]
     zoom: 5, // starting zoom
     projection: 'mercator', // display the map as a 3D globe
     // scrollZoom: false
     });
+
+    map = map_live
+
+    map.on('click',addMarker)
+ 
+
     // map.on('style.load', () => {
     // map.setFog({}); // Set the default atmosphere style
     // });
     
-    // gas_stations.map((d)=>{
-    //    const marker = new mapboxgl.Marker()
-    //   .setLngLat([Number(d.lng),Number(d.lat)])
-    //   .addTo(map_live);
-
-    // })
-    const marker = new mapboxgl.Marker()
-    .setLngLat([10.40,51.520008])
-    .addTo(map_live);
   };
+
