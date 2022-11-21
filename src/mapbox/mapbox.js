@@ -3,7 +3,7 @@ import './mapbox-gl.css';
 
 var map = null;
 var _gas_stations = null;
-var marker1 = new mapboxgl.Marker();
+var marker1 = new mapboxgl.Marker({color: 'red'});
 
 const neighbors = new Array(5);
 for(let i = 0; i < 5; i++)
