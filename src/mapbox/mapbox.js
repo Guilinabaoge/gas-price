@@ -1,19 +1,33 @@
 import * as mapboxgl from 'mapbox-gl';
 import './mapbox-gl.css';
 
-var map = null
+var map = null;
+var _gas_stations = null;
+var marker1 = new mapboxgl.Marker();
 
-var marker = new mapboxgl.Marker();
+const neighbors = new Array(5);
+for(let i = 0; i < 5; i++)
+{
+    neighbors[i] =  new mapboxgl.Marker() 
+}
+
 
 function addMarker(event){
   var coordinates = event.lngLat;
   console.log('Lng:', coordinates.lng, 'Lat:', coordinates.lat);
-  marker.setLngLat(coordinates).addTo(map);
+  marker1.setLngLat(coordinates).addTo(map);
+  let topk = pClosest(_gas_stations,5,coordinates)
+  for(let i = 0; i < 5; i++)
+  {
+      neighbors[i].setLngLat([topk[i].lng,topk[i].lat]).addTo(map);
+  }
 }
 
-export function map_live(gas_stations){
 
-    // const map = document.getElementById("map_container")
+
+
+export function map_live(gas_stations){
+    _gas_stations = gas_stations;
     mapboxgl.accessToken =  'pk.eyJ1IjoiZ3VpbGluYWJhb2dlIiwiYSI6ImNsYWt3czRuMzAwMGczb2t2a3J4azRweHgifQ.OgCn9ii9a9NDSjOg1Rqy_g';
     const map_live = new mapboxgl.Map({
     container: 'map_container', // container ID
@@ -28,11 +42,39 @@ export function map_live(gas_stations){
     map = map_live
 
     map.on('click',addMarker)
- 
 
-    // map.on('style.load', () => {
-    // map.setFog({}); // Set the default atmosphere style
-    // });
-    
   };
 
+
+function pClosest(pts,k,pt)
+{
+    let n = pts.length;
+    let distance = new Array(n);
+    let result = new Array(k);
+    for(let i = 0; i < n; i++)
+    {
+        let lat = Number(pts[i].lat), lng = Number(pts[i].lng);
+        distance[i] = (lat - Number(pt.lat))**2 + (lng - Number(pt.lng))**2;
+    }
+  
+    distance.sort(function(a,b){return a-b;});
+      
+    // Find the k-th distance
+    let distk = distance[k - 1];
+    
+    // Print all distances which are
+    // smaller than k-th distance
+    let counter = 0;
+    for(let i = 0; i < n; i++)
+    {
+        let lat = Number(pts[i].lat), lng = Number(pts[i].lng);
+        let dist = (lat - Number(pt.lat))**2 + (lng - Number(pt.lng))**2;
+          
+        if (dist <= distk){
+          result[counter] = {lat,lng};
+          counter += 1;
+        }  
+    }
+
+    return result
+}
