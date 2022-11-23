@@ -10,6 +10,7 @@ import {useHex} from './useData/useHex';
 import {Hexmap} from './Basemap_Hexbin';
 import './overview.css';
 import {map_live,addMarker} from './mapbox/mapbox'
+import {makeLineChart} from './multiLineChart/lineChart'
 
 
 
@@ -68,6 +69,7 @@ const App = () => {
     document.getElementById("hexmap_container").appendChild(hexmap)
     document.getElementById("hexmap_container").firstChild.setAttribute("id", "hexmap")
     map_live(city_info)
+    makeLineChart()
   } 
 
 
@@ -99,10 +101,6 @@ const App = () => {
     update_slider(+document.getElementById("time").value)
   }
 
-  // const basemap = select("#basemap")
-  // projected_points.map((d)=>{
-  //   basemap.append('circle').attr("cx",`${d.x}`).attr("cy",`${d.y}`).attr("r","1");
-  // })
 
 
   return (
@@ -136,9 +134,10 @@ const App = () => {
               <text>month</text>
               <text>day</text> */}
         </div>
-        
         <div class = "map_level_child" id="map_container" ></div>
-        <div class = "map_level_child" id="plot_container" ></div>
+        <div class = "map_level_child" id="plot_container" >
+          <svg id = "line_chart"></svg>
+        </div>
       </div>
      
 
