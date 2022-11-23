@@ -136,7 +136,7 @@ const App = () => {
         </div>
         <div class = "map_level_child" id="map_container" ></div>
         <div class = "map_level_child" id="plot_container" >
-          <svg id = "line_chart"></svg>
+          <svg id = "line_chart" width="600px" height="300px" transform="translate(280,250) scale(2.5)"></svg>
         </div>
       </div>
      

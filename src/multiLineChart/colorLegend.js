@@ -23,9 +23,9 @@ export const colorLegend = (selection, props) => {
         .attr('r', circleRadius)
         .attr('fill', colorScale);
   
-    groupsEnter.append('text')
-      .merge(groups.select('text'))
-        .text(d => d)
-        .attr('dy', '0.32em')
-        .attr('x', textOffset);
+    // groupsEnter.append('text')
+    //   .merge(groups.select('text'))
+    //     .text(d => d)
+    //     .attr('dy', '0.32em')
+    //     .attr('x', textOffset);
   }

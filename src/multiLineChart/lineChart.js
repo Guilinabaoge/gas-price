@@ -12,39 +12,38 @@ import {
     schemeCategory10,
     descending
   } from 'd3';
-  import {
-    nest
-  } from 'd3-collection'
-  
-  import { colorLegend } from './colorLegend';
+import { nest } from 'd3-collection'
+import { colorLegend } from './colorLegend';
+import './styles.css';
 
   
   // const width = +svg.attr('width');
   // const height = +svg.attr('height');
   
-  
   function render(data){
-    const width = 100;  
-    const height = 50;
+    const width = 500;  
+    const height = 100;
     const svg = select('#line_chart');
-    const title = 'A Week of Temperature Around the World';
+    const title = 'Fuel price change of 5 closest stations';
     
     const xValue = d => d.timestamp;
     const xAxisLabel = 'Time';
     
     const yValue = d => d.temperature;
     const circleRadius = 6;
-    const yAxisLabel = 'Temperature';
+    const yAxisLabel = 'Price';
     
     const colorValue = d => d.city;
     
-    const margin = { top: 60, right: 160, bottom: 88, left: 105 };
+    const margin = { top: 25, right: 20, bottom: 0, left:100 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
+    // const innerWidth = width 
+    // const innerHeight = height 
     
     const xScale = scaleTime()
       .domain(extent(data, xValue))
-      .range([0, innerWidth])
+      .range([0, innerWidth/2])
       .nice();
     
     const yScale = scaleLinear()
@@ -60,18 +59,18 @@ import {
     
     const xAxis = axisBottom(xScale)
       .tickSize(-innerHeight)
-      .tickPadding(15);
+      .tickPadding(4);
     
     const yAxis = axisLeft(yScale)
-      .tickSize(-innerWidth)
-      .tickPadding(10);
+      .tickSize(-innerWidth/2)
+      .tickPadding(4);
     
     const yAxisG = g.append('g').call(yAxis);
     yAxisG.selectAll('.domain').remove();
     
     yAxisG.append('text')
         .attr('class', 'axis-label')
-        .attr('y', -60)
+        .attr('y', -20)
         .attr('x', -innerHeight / 2)
         .attr('fill', 'black')
         .attr('transform', `rotate(-90)`)
@@ -85,8 +84,8 @@ import {
     
     xAxisG.append('text')
         .attr('class', 'axis-label')
-        .attr('y', 80)
-        .attr('x', innerWidth / 2)
+        .attr('y', 25)
+        .attr('x', 90)
         .attr('fill', 'black')
         .text(xAxisLabel);
     
@@ -105,8 +104,6 @@ import {
         descending(lastYValue(a), lastYValue(b))
       );
     
-    console.log(nested);
-    
     colorScale.domain(nested.map(d => d.key));
     
     g.selectAll('.line-path').data(nested)
@@ -120,14 +117,14 @@ import {
         .attr('y', -10)
         .text(title);
     
-    svg.append('g')
-      .attr('transform', `translate(790,121)`)
-      .call(colorLegend, {
-        colorScale,
-        circleRadius: 13,
-        spacing: 30,
-        textOffset: 15
-      });
+    // svg.append('g')
+    //   .attr('transform', `translate(280,50)`)
+    //   .call(colorLegend, {
+    //     colorScale,
+    //     circleRadius: 6,
+    //     spacing: 15,
+    //     textOffset: 15
+    //   });
   };
   
 export function makeLineChart(){
