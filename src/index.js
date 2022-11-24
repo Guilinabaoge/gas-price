@@ -1,6 +1,6 @@
 import React, { StrictMode} from 'react';
 import { createRoot } from "react-dom/client";
-import { scaleSequential, min,max,select, geoMercator, selectAll,interpolateBuGn} from 'd3';
+import { scaleSequential, min,max,select, geoMercator, selectAll,interpolateBuGn,pointer} from 'd3';
 import { useMap } from './useData/useMap';
 import { useGas } from './useData/useGas'; 
 import { useTest } from './useData/useTest'; 
@@ -70,6 +70,7 @@ const App = () => {
     document.getElementById("hexmap_container").firstChild.setAttribute("id", "hexmap")
     map_live(city_info)
     makeLineChart()
+    makeVerticalLine()
   } 
 
 
@@ -77,7 +78,35 @@ const App = () => {
   ColorBar(colorScale);
 
   select("#time").on("input",make_graph);
-  selectAll(".hex").on("click",clickHex)
+  selectAll(".hex").on("click",clickHex);
+
+
+  //TODO fix the vertical line
+  select("#horizon_graph").on("mouseover",(event)=>{
+    var mouse = pointer(event)
+    console.log(`M ${mouse[0]},500 ${mouse[0]},0`)
+    select(".mouse-line").attr("d",`M ${mouse[0]},500 ${mouse[0]},0`)
+    
+  });
+
+
+
+  function makeVerticalLine(){
+    // var mouse = pointer(event)
+    const horizonGraph = select("#horizon_graph");
+    const mouseG = horizonGraph.append("g").attr("class", "mouse-over-effects");
+
+    // [625, 416]
+    // console.log(mouse)
+    mouseG.append("path") // create vertical line to follow mouse
+    .attr("class", "mouse-line")
+    .style("stroke", "black")
+    .style("stroke-width", "2")
+    .style("opacity", "1")
+  
+
+   
+  }
 
   function clickHex(){
     console.log("Hi")

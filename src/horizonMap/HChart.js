@@ -31,9 +31,6 @@ export function HChart(data, {
   scheme = d3.schemeSpectral, // color scheme; shorthand for colors
   colors = scheme[Math.max(3, bands)], // an array of colors
 } = {}) {
-  // console.log(Date(data[0]['date']))
-  // console.log(Number(data[0]['value']))
-  // console.log(data)
   // Compute values.
   const X = d3.map(data, x);
   const Y = d3.map(data, y);
@@ -124,6 +121,18 @@ export function HChart(data, {
         .filter(d => xScale(d) < 10 || xScale(d) > width - 10)
         .remove())
       .call(g => g.select(".domain").remove());
+
+
+
+    // d3.select("#horizon_container")
+    // .on("mousemove", function(){  
+    //   mousex = d3.pointer(this);
+    //   mousex = mousex[0] + 5;
+    //   vertical.style("left", mousex + "px" )})
+    // .on("mouseover", function(){  
+    //   mousex = d3.pointer(this);
+    //   mousex = mousex[0] + 5;
+    //   vertical.style("left", mousex + "px")});
 
   return svg.node();
 }

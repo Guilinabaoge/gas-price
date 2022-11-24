@@ -9,6 +9,8 @@
     border: 3px solid black;
   }
   
+
+  /* TODO how to change the height of the horizon graph while keep the width. */
   #horizon_graph{
     width: 100%; 
   }
