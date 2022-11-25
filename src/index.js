@@ -22,6 +22,7 @@ const App = () => {
   const gas = useGas(); 
   const test = useTest();
 
+
   const projection = geoMercator()
   // .reflect(true)
   .fitSize([width, height], map)
@@ -80,32 +81,50 @@ const App = () => {
   select("#time").on("input",make_graph);
   selectAll(".hex").on("click",clickHex);
 
-
-  //TODO fix the vertical line
-  select("#horizon_graph").on("mouseover",(event)=>{
+  select("#horizon_graph").on("mousemove",(event)=>{
     var mouse = pointer(event)
-    console.log(`M ${mouse[0]},500 ${mouse[0]},0`)
     select(".mouse-line").attr("d",`M ${mouse[0]},500 ${mouse[0]},0`)
-    
+    updateTooltipContent(event)
   });
 
+  select("#horizon_graph").on("mouseover",(event)=>{
+    select(".mouse-line").style("opacity", "1")
+    select("#tooltip").style("opacity", "1")
+  });
+
+  select("#horizon_graph").on("mouseout",(event)=>{
+    select(".mouse-line").style("opacity", "0")
+    select("#tooltip").style("opacity", "0")
+  });
+
+  function updateTooltipContent(event){
+    select("#tooltip").html(`${event.screenX-250 } . ${event.screenY-180} `)
+    .style('display', 'block')
+    .style('left', `${event.screenX-250}px`)
+    .style('top', `${event.screenY-180}px`)
+    .style('font-size', 11.5)
+  }
+
+ 
 
 
   function makeVerticalLine(){
-    // var mouse = pointer(event)
     const horizonGraph = select("#horizon_graph");
     const mouseG = horizonGraph.append("g").attr("class", "mouse-over-effects");
 
-    // [625, 416]
-    // console.log(mouse)
     mouseG.append("path") // create vertical line to follow mouse
     .attr("class", "mouse-line")
     .style("stroke", "black")
-    .style("stroke-width", "2")
-    .style("opacity", "1")
-  
+    .style("stroke-width", "1")
+    .style("opacity", "0")
 
-   
+    select("#horizon_container").append("div")
+      .attr('id', 'tooltip')
+      .style('position', 'absolute')
+      .style("background-color", "#D3D3D3")
+      .style('padding', 6)
+      .style('display', 'none')
+
   }
 
   function clickHex(){
