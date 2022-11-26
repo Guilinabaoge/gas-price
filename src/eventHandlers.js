@@ -1,7 +1,6 @@
 import {select,selectAll,pointer,scaleTime} from "d3";
 
 export function eventHandlers(){
-    select("#time").on("input",make_graph);
     selectAll(".hex").on("click",clickHex);
   
     select("#horizon_graph").on("mousemove",(event)=>{
@@ -36,8 +35,7 @@ function updateTooltipContent(event){
   
   }
 
-// var dateObj = new Date();
-// dateObj.setFullYear(2015,1,1);
+
 const timescale = scaleTime()
   .range([523,1908])
   .domain([new Date().setFullYear(2014,6,8),new Date().setFullYear(2020,10,3)])
@@ -45,26 +43,6 @@ const timescale = scaleTime()
 function clickHex(){
     console.log("Hi")
 }
-
-
-//TODO scroll bar
-function make_graph(){
-    update_slider(+document.getElementById("time").value)
-}
-
-
-//TODO change the slider domain to 2015-01-01 --> 2020-01-01
-function update_slider(time) {
-    var dateObj = new Date();
-    dateObj.setFullYear(2015,1,1);
-    dateObj.setDate(dateObj.getDate()+time)
-    const year = dateObj.getFullYear().toString()
-    const mont = dateObj.getMonth().toString()
-    const day = dateObj.getDate().toString()
-    select("#prettyTime")
-    .text(`${day}   ${mont}   ${year}`);
-}
-
 
 
 export function makeVerticalLine(){

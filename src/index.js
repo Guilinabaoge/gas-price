@@ -91,12 +91,9 @@ const App = () => {
       
 
       <div class="map_level">
-        {/* <div class = "map_level_child" id="map_dashboard"></div> */}
           <div class = "map_level_child" id="hex_wrapper">
               <div class = "map_level_child" id="hexmap_container"></div>
               <div class = "map_level_child">
-              {/* <input type="range" id="time" min="0" max="1826" />  
-              <label for="time">Date = <span id="prettyTime">01-01-2015</span></label> */}
               </div>
               {/* <text>year</text>
               <text>month</text>
