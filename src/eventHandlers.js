@@ -1,4 +1,4 @@
-import {select,selectAll,pointer} from "d3";
+import {select,selectAll,pointer,scaleTime} from "d3";
 
 export function eventHandlers(){
     select("#time").on("input",make_graph);
@@ -23,13 +23,24 @@ export function eventHandlers(){
 
 
 function updateTooltipContent(event){
-    select("#tooltip").html(`${event.screenX-250 } . ${event.screenY-180} `)
+  const mouse_on = timescale.invert(event.screenX);
+  const year = mouse_on.getFullYear().toString()
+  const month = mouse_on.getMonth().toString()
+  const day = mouse_on.getDate().toString()
+    select("#tooltip").html(`Year:${year}   Month:${month}   Day:${day}`)
     .style('display', 'block')
-    .style('left', `${event.screenX-250}px`)
+    .style('left', `${event.screenX-200}px`)
     .style('top', `${event.screenY-180}px`)
     .style('font-size', 11.5)
+
+  
   }
 
+// var dateObj = new Date();
+// dateObj.setFullYear(2015,1,1);
+const timescale = scaleTime()
+  .range([523,1908])
+  .domain([new Date().setFullYear(2014,6,8),new Date().setFullYear(2020,10,3)])
 //TODO
 function clickHex(){
     console.log("Hi")

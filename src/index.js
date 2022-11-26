@@ -1,6 +1,6 @@
 import React, { StrictMode} from 'react';
 import { createRoot } from "react-dom/client";
-import { scaleSequential, min,max,select, geoMercator, selectAll,interpolateBuGn,pointer} from 'd3';
+import { scaleSequential, min,max,select, geoMercator, selectAll,interpolateBuGn,pointer,scaleTime} from 'd3';
 import { useMap } from './useData/useMap';
 import { useGas } from './useData/useGas'; 
 import { useTest } from './useData/useTest'; 
@@ -33,18 +33,10 @@ const App = () => {
     return <pre>Loading...</pre>;
   }
 
-  const rowByState = new Map();
-  gas.forEach(d => {
-  	rowByState.set(d.state,d);
-  })
-  
   const colorValue = d => d.diesel;
 
   const colorScale = scaleSequential(interpolateBuGn)
 		.domain([min(gas,colorValue),max(gas,colorValue)]);
-
-  // //TODO Fix color bar
-  // ColorBar(colorScale);
 
   const hChart = HChart(test,{
     x: d => d.date,
@@ -68,7 +60,7 @@ const App = () => {
      document.getElementById("hexmap_container") !== null 
      ) {
     document.getElementById("horizon_container").appendChild(hChart)
-    document.getElementById("horizon_container").firstChild.setAttribute("id", "horizon_graph")
+    // document.getElementById("horizon_container").firstChild.setAttribute("id", "horizon_graph")
     document.getElementById("hexmap_container").appendChild(hexmap)
     document.getElementById("hexmap_container").firstChild.setAttribute("id", "hexmap")
     map_live(city_info)

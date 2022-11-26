@@ -70,12 +70,14 @@ export function HChart(data, {
   
 
   const svg = d3.create("svg")
+      .attr("id","horizon_graph")
       .attr("width", width)
       .attr("height", height)
       .attr("viewBox", [0, 0, width, height])
       .attr("style", "max-width: 100%; height: auto; height: intrinsic;")
       .attr("font-family", "sans-serif")
       .attr("font-size", 10);
+      // .attr("id","hexmap");
 
   const g = svg.selectAll("g")
     .data(d3.group(I, i => Z[i]))
@@ -122,17 +124,6 @@ export function HChart(data, {
         .remove())
       .call(g => g.select(".domain").remove());
 
-
-
-    // d3.select("#horizon_container")
-    // .on("mousemove", function(){  
-    //   mousex = d3.pointer(this);
-    //   mousex = mousex[0] + 5;
-    //   vertical.style("left", mousex + "px" )})
-    // .on("mouseover", function(){  
-    //   mousex = d3.pointer(this);
-    //   mousex = mousex[0] + 5;
-    //   vertical.style("left", mousex + "px")});
 
   return svg.node();
 }
