@@ -4,10 +4,10 @@ import { legendColor } from 'd3-svg-legend'
 
 export const ColorBar = (colorScale) => {
   // document.getElementById('colorbar')
-  var svg = select("#colorbar");
+  var svg = select("#basemap");
   svg.append("g")
   .attr("class", "legendQuant")
-  .attr("transform", "translate(100,70) scale(1)");
+  .attr("transform", "translate(150,20) scale(1)");
 
   var legend = legendColor()
     .labelFormat(format(".3f"))
@@ -20,6 +20,5 @@ export const ColorBar = (colorScale) => {
 
   svg.select(".legendQuant")
     .call(legend);
-  
   
 };
