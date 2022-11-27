@@ -1,29 +1,42 @@
 import {select,selectAll,pointer,scaleTime} from "d3";
 import { addMarker } from "./mapbox/mapbox";
+import { newQuery } from "./useData/useHex"
 
 var _projection = null;
 
 export function eventHandlers(projection){
     _projection = projection
 
-    selectAll(".hex").on("click",(event) => {
+    selectAll(".hex")
+    .on("click",(event) => {
       clickHex(event)
-    });
+    })
+    .on("mouseover",(event,d)=>{
+      //TODO hovering effect of hexmap 
+      // event.fromElement.attr("fill","red")
+      // select(event.fromElement).style("fill","red")
+      // console.log(select(event.fromElement))
+      // console.log(event.fromElement)
+    }) ;
   
-    select("#horizon_graph").on("mousemove",(event)=>{
+    select("#horizon_graph")
+    .on("mousemove",(event)=>{
       var mouse = pointer(event)
       select(".mouse-line").attr("d",`M ${mouse[0]},500 ${mouse[0]},0`)
-      updateTooltipContent(event)
-    });
-  
-    select("#horizon_graph").on("mouseover",(event)=>{
+      updateTooltipContent(event)})
+    .on("mouseover",(event)=>{
       select(".mouse-line").style("opacity", "1")
-      select("#tooltip").style("opacity", "1")
-    });
-  
-    select("#horizon_graph").on("mouseout",(event)=>{
+      select("#tooltip").style("opacity", "1")})
+    .on("mouseout",(event)=>{
       select(".mouse-line").style("opacity", "0")
-      select("#tooltip").style("opacity", "0")
+      select("#tooltip").style("opacity", "0")})
+    .on("click",(event,d)=>{ 
+      //TODO refactor with updateTooltipContent
+      const mouse_on = timescale.invert(event.screenX);
+      const year = mouse_on.getFullYear().toString()
+      const month = mouse_on.getMonth().toString()
+      const day = mouse_on.getDate().toString()
+      newQuery(year,month,day)
     });
 }
 
@@ -38,9 +51,7 @@ function updateTooltipContent(event){
     .style('left', `${event.screenX-200}px`)
     .style('top', `${event.screenY-180}px`)
     .style('font-size', 11.5)
-
   }
-
 
 const timescale = scaleTime()
   .range([523,1908])
@@ -71,4 +82,5 @@ export function makeVerticalLine(){
       .style("background-color", "#D3D3D3")
       .style('padding', 6)
       .style('display', 'none')
+
   }

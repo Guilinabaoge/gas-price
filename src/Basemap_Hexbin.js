@@ -42,11 +42,11 @@ export function Hexmap (map_width,height,proj,states,city_info){
     .style("background-color","white")
 
   
-
    const city_info_hex = _hexbin(city_info)
    const hex_max = d3.max(city_info_hex.map(o => d3.sum(o.map(d => d.diesel))))
     let hexes = map
       .append("g")
+      .attr("id","hex_container")
       .selectAll("path")
       .data(city_info_hex)
       .join("path")

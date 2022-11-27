@@ -6,7 +6,6 @@
   /* grid-gap: 20px; */
 } 
 
-
 .map_level_child{
   border: 3px solid black;
 
@@ -20,6 +19,8 @@
 #time{
   width: 100%;
 }
+
+
 
 
 

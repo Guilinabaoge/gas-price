@@ -27,9 +27,9 @@ const App = () => {
   // .reflect(true)
   .fitSize([width, height], map)
 
-  const city_info = useHex()
+  const fuel_price = useHex()
 
-  if (!map|| !gas||!city_info||!test) {
+  if (!map|| !gas||!fuel_price||!test) {
     return <pre>Loading...</pre>;
   }
 
@@ -44,7 +44,7 @@ const App = () => {
     z: d => d.name,
   });
 
-  let projected_points = city_info.map((d)=>{
+  let projected_points = fuel_price.map((d)=>{
     const [x, y] = projection([Number(d.lng), Number(d.lat)]);
     let diesel = d.diesel;
     return {diesel,x,y};
@@ -63,7 +63,7 @@ const App = () => {
     // document.getElementById("horizon_container").firstChild.setAttribute("id", "horizon_graph")
     document.getElementById("hexmap_container").appendChild(hexmap)
     document.getElementById("hexmap_container").firstChild.setAttribute("id", "hexmap")
-    map_live(city_info)
+    map_live(fuel_price)
     makeLineChart()
     makeVerticalLine(projection)
     eventHandlers(projection)
