@@ -65,8 +65,8 @@ const App = () => {
     document.getElementById("hexmap_container").firstChild.setAttribute("id", "hexmap")
     map_live(city_info)
     makeLineChart()
-    makeVerticalLine()
-    eventHandlers()
+    makeVerticalLine(projection)
+    eventHandlers(projection)
     ColorBar(colorScale);
   } 
 

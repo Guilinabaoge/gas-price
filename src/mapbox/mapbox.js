@@ -12,9 +12,10 @@ for(let i = 0; i < 5; i++)
 }
 
 
-function addMarker(event){
+export function addMarker(event){
+  console.log(event)
   var coordinates = event.lngLat;
-  console.log('Lng:', coordinates.lng, 'Lat:', coordinates.lat);
+  // console.log('Lng:', coordinates.lng, 'Lat:', coordinates.lat);
   marker1.setLngLat(coordinates).addTo(map);
   let topk = pClosest(_gas_stations,5,coordinates)
   for(let i = 0; i < 5; i++)
@@ -40,7 +41,6 @@ export function map_live(gas_stations){
     });
 
     map = map_live
-
     map.on('click',addMarker)
 
   };

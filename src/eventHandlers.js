@@ -1,7 +1,14 @@
 import {select,selectAll,pointer,scaleTime} from "d3";
+import { addMarker } from "./mapbox/mapbox";
 
-export function eventHandlers(){
-    selectAll(".hex").on("click",clickHex);
+var _projection = null;
+
+export function eventHandlers(projection){
+    _projection = projection
+
+    selectAll(".hex").on("click",(event) => {
+      clickHex(event)
+    });
   
     select("#horizon_graph").on("mousemove",(event)=>{
       var mouse = pointer(event)
@@ -32,16 +39,19 @@ function updateTooltipContent(event){
     .style('top', `${event.screenY-180}px`)
     .style('font-size', 11.5)
 
-  
   }
 
 
 const timescale = scaleTime()
   .range([523,1908])
   .domain([new Date().setFullYear(2014,6,8),new Date().setFullYear(2020,10,3)])
-//TODO
-function clickHex(){
-    console.log("Hi")
+
+
+function clickHex(event){
+  const _lat = event.path[0].transform.baseVal.consolidate().matrix.f;
+  const _lng = event.path[0].transform.baseVal.consolidate().matrix.e;
+  const [lng,lat] = _projection.invert([_lng,_lat]);
+  addMarker({lngLat:{lng:`${lng}`,lat:`${lat}`}})
 }
 
 
