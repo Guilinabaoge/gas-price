@@ -20,23 +20,20 @@ const height = 600;
 
 const App = () => {
   const map = useMap();
-  const gas = useGas(); 
   const test = useTest();
-
-  const projection = geoMercator()
-  // .reflect(true)
-  .fitSize([width, height], map)
-
   const fuel_price = useHex()
 
-  if (!map|| !gas||!fuel_price||!test) {
+  const projection = geoMercator()
+  .fitSize([width, height], map)
+
+  if (!map||!fuel_price||!test) {
     return <pre>Loading...</pre>;
   }
 
   const colorValue = d => d.diesel;
 
   const colorScale = scaleSequential(interpolateBuGn)
-		.domain([min(gas,colorValue),max(gas,colorValue)]);
+		.domain([min(fuel_price,colorValue),max(fuel_price,colorValue)]);
 
   const hChart = HChart(test,{
     x: d => d.date,
@@ -105,62 +102,6 @@ const App = () => {
         </div>
       </div>
      
-
-      
-      
-
-      {/* TODO refactor */}
-      {/* <label for="gastype_select">
-        Fueltype =
-      </label>
-      <select id="gastype_select" class="dashboard">
-        <option >Diesel</option>
-        <option >E5</option>
-        <option value="mont">E10</option>
-      </select>
-
-      <label for="year_label" id="year_label">
-        Year =
-      </label>
-      <select id="year_select" class="dashboard">
-        <option >2015</option>
-        <option >2016</option>
-        <option >2017</option>
-        <option >2018</option>
-        <option >2019</option>
-        <option >2020</option>
-      </select>
-
-      <label for="month_select" id="month_label">
-        Month =
-      </label>
-      <select id="month_select" class="dashboard">
-        <option >1</option>
-        <option >2</option>
-        <option >3</option>
-        <option >4</option>
-        <option >5</option>
-        <option >6</option>
-      </select>
-
-
-      <label for="day_select" id="day_label">
-        Day =
-      </label>
-      <select id="day_select" >
-        <option >1</option>
-        <option >2</option>
-        <option >3</option>
-        <option >4</option>
-        <option >5</option>
-        <option >6</option>
-      </select>
-
-
-      <label for="time">
-         Time = <span id="prettyTime">...</span>
-       </label>
-      <input type="range" id="time" min="240" max="1440" /> */}
     </div>
     
   );

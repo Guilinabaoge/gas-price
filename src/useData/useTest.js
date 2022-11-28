@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import { csv } from 'd3';
 
-const csvUrl = 'http://127.0.0.1:5000/hchart/2015-01-01/2015-01-02'
+const csvUrl = 'http://127.0.0.1:5000/hchart'
 
 
 export const useTest = () => {
