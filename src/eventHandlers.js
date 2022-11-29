@@ -29,15 +29,15 @@ export function eventHandlers(projection){
       select("#tooltip").style("opacity", "1")})
     .on("mouseout",(event)=>{
       select(".mouse-line").style("opacity", "0")
-      select("#tooltip").style("opacity", "0")})
-    .on("click",(event,d)=>{ 
-      //TODO refactor with updateTooltipContent
-      const mouse_on = timescale.invert(event.screenX);
-      const year = mouse_on.getFullYear().toString()
-      const month = mouse_on.getMonth().toString()
-      const day = mouse_on.getDate().toString()
-      newQuery(year,month,day)
-    });
+      select("#tooltip").style("opacity", "0")});
+    // .on("click",(event,d)=>{ 
+    //   //TODO refactor with updateTooltipContent
+    //   const mouse_on = timescale.invert(event.screenX);
+    //   const year = mouse_on.getFullYear().toString()
+    //   const month = mouse_on.getMonth().toString()
+    //   const day = mouse_on.getDate().toString()
+    //   newQuery(year,month,day)
+    // });
 }
 
 

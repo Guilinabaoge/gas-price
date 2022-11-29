@@ -1,15 +1,14 @@
 import React, { StrictMode} from 'react';
 import { createRoot } from "react-dom/client";
-import { scaleSequential, min,max,select, geoMercator, selectAll,interpolateBuGn,pointer,scaleTime} from 'd3';
+import { scaleSequential, min,max, geoMercator,interpolateBuGn,select,scaleTime,csv} from 'd3';
 import { useMap } from './useData/useMap';
-import { useGas } from './useData/useGas'; 
 import { useTest } from './useData/useTest'; 
 import { ColorBar } from './ColorBar';
 import { HChart} from './horizonMap/HChart';
 import {useHex} from './useData/useHex';
 import {Hexmap} from './Basemap_Hexbin';
 import './overview.css';
-import {map_live,addMarker} from './mapbox/mapbox'
+import {map_live} from './mapbox/mapbox'
 import {makeLineChart} from './multiLineChart/lineChart'
 import { eventHandlers, makeVerticalLine } from './eventHandlers';
 
@@ -21,7 +20,7 @@ const height = 600;
 const App = () => {
   const map = useMap();
   const test = useTest();
-  const fuel_price = useHex()
+  const fuel_price = useHex();
 
   const projection = geoMercator()
   .fitSize([width, height], map)
@@ -30,10 +29,7 @@ const App = () => {
     return <pre>Loading...</pre>;
   }
 
-  const colorValue = d => d.diesel;
-
-  const colorScale = scaleSequential(interpolateBuGn)
-		.domain([min(fuel_price,colorValue),max(fuel_price,colorValue)]);
+  
 
   const hChart = HChart(test,{
     x: d => d.date,
@@ -41,13 +37,7 @@ const App = () => {
     z: d => d.name,
   });
 
-  let projected_points = fuel_price.map((d)=>{
-    const [x, y] = projection([Number(d.lng), Number(d.lat)]);
-    let diesel = d.diesel;
-    return {diesel,x,y};
-  });
 
-  const hexmap = Hexmap(width,height,projection,map,projected_points);
 
 
   //TODO refactor 
@@ -57,16 +47,57 @@ const App = () => {
      document.getElementById("hexmap_container") !== null 
      ) {
     document.getElementById("horizon_container").appendChild(hChart)
-    // document.getElementById("horizon_container").firstChild.setAttribute("id", "horizon_graph")
-    document.getElementById("hexmap_container").appendChild(hexmap)
-    document.getElementById("hexmap_container").firstChild.setAttribute("id", "hexmap")
+    makeHexMap(map,fuel_price)
     map_live(fuel_price)
     makeLineChart()
     makeVerticalLine(projection)
     eventHandlers(projection)
-    ColorBar(colorScale);
+   
   } 
 
+
+  function makeHexMap(map,fuel_price){
+    let projected_points = fuel_price.map((d)=>{
+      const [x, y] = projection([Number(d.lng), Number(d.lat)]);
+      let diesel = d.diesel;
+      return {diesel,x,y}; 
+    });
+  
+    const hexmap = Hexmap(width,height,projection,map,projected_points);
+    document.getElementById("hexmap_container").appendChild(hexmap)
+    document.getElementById("hexmap_container").firstChild.setAttribute("id", "hexmap")
+
+    const colorValue = d => d.diesel;
+
+    const colorScale = scaleSequential(interpolateBuGn)
+		.domain([min(fuel_price,colorValue),max(fuel_price,colorValue)]);
+
+    ColorBar(colorScale);
+  }
+
+
+  select("#horizon_graph")
+  .on("click",(event,d)=>{ 
+    const mouse_on = timescale.invert(event.screenX);
+    const year = mouse_on.getFullYear().toString()
+    const month = mouse_on.getMonth().toString()
+    const day = mouse_on.getDate().toString()
+    const csvUrl = `http://127.0.0.1:5000/diesel/${year}/${month}/${day}`
+    
+    csv(csvUrl)
+    .then(data => {
+      data.forEach(d => {
+        d.diesel = Number(d.diesel);
+      });
+      select("#hexmap").remove()
+      console.log(data)
+      makeHexMap(map,data)
+    });
+  });
+
+  const timescale = scaleTime()
+      .range([523,1908])
+      .domain([new Date().setFullYear(2014,6,8),new Date().setFullYear(2020,10,3)])
 
   return (
     <div class="root">
@@ -92,16 +123,12 @@ const App = () => {
               <div class = "map_level_child" id="hexmap_container"></div>
               <div class = "map_level_child">
               </div>
-              {/* <text>year</text>
-              <text>month</text>
-              <text>day</text> */}
         </div>
         <div class = "map_level_child" id="map_container" ></div>
         <div class = "map_level_child" id="plot_container" >
           <svg id = "line_chart" width="600px" height="300px" transform="translate(280,250) scale(2.5)"></svg>
         </div>
       </div>
-     
     </div>
     
   );

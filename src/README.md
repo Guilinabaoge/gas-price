@@ -1,4 +1,8 @@
 #TODO
+1. data update
+1. make the graph small
+
+
 1. solve the top k closest problem 
 1. Find top 10 closes gas stations by click a point on the map.and plot their price change over year compare with the average price
 1. Dashboard to change fuel type and specific day
