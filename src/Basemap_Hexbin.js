@@ -60,9 +60,12 @@ export function Hexmap (map_width,height,proj,states,city_info){
       .style("stroke", "#fff")
       .attr("stroke-width", 0.4)
 
+   
 
   return div.node();
 }
+
+
 
 
 

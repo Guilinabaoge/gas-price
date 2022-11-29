@@ -3,7 +3,6 @@ import { legendColor } from 'd3-svg-legend'
 
 
 export const ColorBar = (colorScale) => {
-  // document.getElementById('colorbar')
   var svg = select("#basemap");
   svg.append("g")
   .attr("class", "legendQuant")

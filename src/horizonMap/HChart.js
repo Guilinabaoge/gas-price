@@ -1,5 +1,7 @@
 // import {curveLinear,scaleUtc,scaleLinear,schemeGreys,map,extent,max,InternSet,range,axisTop,create,group,area} from 'd3'
 import * as d3 from "d3"
+import { ColorBar } from "../ColorBar";
+import { legendColor } from 'd3-svg-legend'
 // Copyright 2021 Observable, Inc.
 // Released under the ISC license.
 // https://observablehq.com/@d3/horizon-chart
@@ -28,7 +30,7 @@ export function HChart(data, {
   yDomain, // [ymin, ymax]
   yRange = [size, size - bands * (size - padding)], // [bottom, top]
   zDomain, // array of z-values
-  scheme = d3.schemeSpectral, // color scheme; shorthand for colors
+  scheme = d3.schemeRdBu, // color scheme; shorthand for colors
   colors = scheme[Math.max(3, bands)], // an array of colors
 } = {}) {
   // Compute values.
@@ -124,6 +126,13 @@ export function HChart(data, {
         .remove())
       .call(g => g.select(".domain").remove());
 
+  const colorValue = d => d.value;
+
+  const colorScale = d3.scaleSequential(d3.interpolateRdYlBu)
+  .domain([d3.min(data,colorValue),d3.max(data,colorValue)]);
+
+  //TODO add colorlegend 
+  // ColorBar(colorScale,"#horizon_legend"); 
 
   return svg.node();
 }
