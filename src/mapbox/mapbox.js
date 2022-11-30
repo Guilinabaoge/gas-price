@@ -4,24 +4,26 @@ import './mapbox-gl.css';
 var map = null;
 var _gas_stations = null;
 var marker1 = new mapboxgl.Marker({color: 'red'});
+const colorlist = ['blue','violet','yellow','green','orange']
 
 const neighbors = new Array(5);
 for(let i = 0; i < 5; i++)
 {
-    neighbors[i] =  new mapboxgl.Marker() 
+    neighbors[i] =  new mapboxgl.Marker({color:colorlist[i]})
 }
 
 
 export function addMarker(event){
   console.log(event)
   var coordinates = event.lngLat;
-  // console.log('Lng:', coordinates.lng, 'Lat:', coordinates.lat);
   marker1.setLngLat(coordinates).addTo(map);
   let topk = pClosest(_gas_stations,5,coordinates)
   for(let i = 0; i < 5; i++)
   {
       neighbors[i].setLngLat([topk[i].lng,topk[i].lat]).addTo(map);
+      console.log(neighbors[i]._pos)
   }
+  
 }
 
 
@@ -50,7 +52,7 @@ function pClosest(pts,k,pt)
 {
     let n = pts.length;
     let distance = new Array(n);
-    let result = new Array(k);
+    let result = new Array(k); 
     for(let i = 0; i < n; i++)
     {
         let lat = Number(pts[i].lat), lng = Number(pts[i].lng);
@@ -75,6 +77,5 @@ function pClosest(pts,k,pt)
           counter += 1;
         }  
     }
-
     return result
 }
