@@ -5,7 +5,7 @@ var map = null;
 var _gas_stations = null;
 var marker1 = new mapboxgl.Marker({color: 'red'});
 const colorlist = ['blue','violet','yellow','green','orange']
-
+console.log(marker1)
 const neighbors = new Array(5);
 for(let i = 0; i < 5; i++)
 {
@@ -20,8 +20,7 @@ export function addMarker(event){
   let topk = pClosest(_gas_stations,5,coordinates)
   for(let i = 0; i < 5; i++)
   {
-      neighbors[i].setLngLat([topk[i].lng,topk[i].lat]).addTo(map);
-      console.log(neighbors[i]._pos)
+      neighbors[i].setLngLat([topk[i].lng,topk[i].lat]).addTo(map); 
   }
   
 }

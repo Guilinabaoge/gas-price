@@ -10,9 +10,10 @@ export const useMap = () => {
   
   useEffect(() => {
     json(jsonUrl).then(topojsonData=>{
+  
     const {DEU_adm2} = topojsonData.objects;
     	setData(feature(topojsonData,DEU_adm2))});
   }, []);
-  
+ 
   return data;
 };
