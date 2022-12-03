@@ -1,10 +1,8 @@
 import fetch from "node-fetch"
 import pg from "pg"
 
-
-var rows = null
-
-async function getStates(){
+//get the id of those stations havent got state
+async function getStation_id(){
   const client = new pg.Client({
     user: 'postgres',
     host: 'localhost',
@@ -14,27 +12,31 @@ async function getStates(){
   })
   client.connect()
     
-  client.query("select * from perfect where state is null limit 1", (err, res) => {
-    const state = 
-    showRows(res.rows[0].lat,res.rows[0].lng).then((d)=>{return d.json()})
-    .then((myJson) => {
-      const stid = res.rows[0].stid
-      const state = myJson[0][0].admin1Code.name
-      updateState(state,stid)
-      // console.log(`update perfect set state = '${state}' where stid = '${stid}'`)
-    }
-    )
-    client.end()
-  })
+  var station_id = await new Promise((resolve,reject) => {
+    client.query("select * from perfect where state is null limit 1", (err, res) => {
+      resolve([res.rows[0].stid,res.rows[0].lat,res.rows[0].lng])
+      client.end()
+    })
+  });
+  return station_id  
 }
 
-async function showRows(lat,lng){
+// given coordinate return state
+async function reverseGeocoding(lat,lng){
   const url = `http://localhost:4000/geocode?latitude=${lat}&longitude=${lng}`
   const response = await fetch(url)
-  return response
+  var state = null;
+  await response.json().then((myJson) => {
+    state = myJson[0][0].admin1Code.name
+  })
+  return new Promise((resolve, reject) => {
+    resolve(state)
+  })
+
 }
 
-async function updateState(state,stid){
+// update state with for each gas station
+async function updateState(){
   const client = new pg.Client({
     user: 'postgres',
     host: 'localhost',
@@ -42,29 +44,34 @@ async function updateState(state,stid){
     password: 'zxc1012m',
     port: 5432,
   })
-  client.connect()
-    
-  client.query(`update perfect set state = '${state}' where stid = '${stid}'`, (err, res) => {
-    console.log("update success")
-    client.end()
+  let stid = null;
+  let lng = null;
+  let lat = null;
+  let state = null;
+  await getStation_id().then((result) => {
+    stid = result[0];
+    lat = result[1];
+    lng = result[2];
   })
+  await reverseGeocoding(lat,lng).then((result)=>{state = result})
+
+  client.connect()
+  
+  const update = await new Promise((resolve, reject) => {
+    client.query(`update perfect set state = '${state}' where stid = '${stid}'`, (err, res) => {
+      console.log("update success")
+      resolve("update success")
+      client.end()
+    })
+  })
+  return update
 }
 
-//why cannot invoke inside for loop?
-// getStates()
-while (true){
-  getStates()
-}
+setInterval(function(){ 
+  updateState()
+}, 1000);
 
 
 
-
-function wait(ms) {
-  var start = Date.now(),
-      now = start;
-  while (now - start < ms) {
-    now = Date.now();
-  }
-}
 
 
