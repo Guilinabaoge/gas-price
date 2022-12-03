@@ -10,20 +10,28 @@ import {
     line,
     curveBasis,
     schemeCategory10,
-    descending
+    descending,
+    create
   } from 'd3';
 import { nest } from 'd3-collection'
 import { colorLegend } from './colorLegend';
 import './styles.css';
 
-  
-  // const width = +svg.attr('width');
-  // const height = +svg.attr('height');
-  
   function render(data){
     const width = 500;  
     const height = 100;
-    const svg = select('#line_chart');
+
+
+    const svg = create("svg")
+      .attr("id","line_chart")
+      .attr("width", "600px")
+      .attr("height", "300px")
+      .attr("transform","translate(280,250) scale(2.5)")
+
+    document.getElementById("plot_container").appendChild(svg.node())
+      // <svg id = "line_chart" width="600px" height="300px" transform="translate(280,250) scale(2.5)"></svg>
+
+    // const svg = select('#line_chart');
     const title = 'Fuel price change of 5 closest stations';
     
     const xValue = d => d.timestamp;
@@ -54,7 +62,7 @@ import './styles.css';
     const colorScale = scaleOrdinal(schemeCategory10);
     
     const g = svg.append('g')
-      .attr('transform', `translate(${margin.left},${margin.top})`);
+      .attr('transform', `translate(${margin.left+15},${margin.top})`);
     
     
     const xAxis = axisBottom(xScale)
@@ -70,7 +78,7 @@ import './styles.css';
     
     yAxisG.append('text')
         .attr('class', 'axis-label')
-        .attr('y', -20)
+        .attr('y', -30)
         .attr('x', -innerHeight / 2)
         .attr('fill', 'black')
         .attr('transform', `rotate(-90)`)
@@ -127,16 +135,46 @@ import './styles.css';
     //   });
   };
   
-export function makeLineChart(){
-    csv('https://gist.githubusercontent.com/Guilinabaoge/1ad61547838756a18904c6c72dde86b0/raw/f69240c0aa08d4d5275b190a1900319c080618e4/linegraph.csv')
+export function makeLineChart(query){
+    csv(`http://127.0.0.1:5000/linechart/${query}`)
     .then(data => {
       data.forEach(d => {
         d.temperature = +d.temperature;
         d.timestamp = new Date(d.timestamp);
       });
       render(data);
-      console.log(data)
     });
 }  
+
+export function makeNewLineChart(topk,time){
+  var start = time 
+  var end = new Date(time.getFullYear(),time.getMonth(),time.getDate())
+  end.setDate(time.getDate() + 15)
+
+  var start_string = `${start.getFullYear().toString()}-${start.getMonth().toString()}-${start.getDate().toString()}`;
+  var end_string = `${end.getFullYear().toString()}-${end.getMonth().toString()}-${end.getDate().toString()}`;
+  
+  
+  const query = 
+  `
+    select avg,date,stid from perfect where lat=${topk[0].lat} and lng=${topk[0].lng}
+    and date between '${start_string}' and '${end_string}'
+    union 
+    select avg,date,stid from perfect where lat=${topk[1].lat} and lng=${topk[1].lng}
+    and date between '${start_string}' and '${end_string}'
+    union
+    select avg,date,stid from perfect where lat=${topk[2].lat} and lng=${topk[2].lng}
+    and date between '${start_string}' and '${end_string}'
+    union
+    select avg,date,stid from perfect where lat=${topk[3].lat} and lng=${topk[3].lng}
+    and date between '${start_string}' and '${end_string}'
+    union
+    select avg,date,stid from perfect where lat=${topk[4].lat} and lng=${topk[4].lng}
+    and date between '${start_string}' and '${end_string}' order by date
+  `
+
+  select("#line_chart").remove()
+  makeLineChart(query)
+}
   
 

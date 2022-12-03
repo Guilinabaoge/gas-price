@@ -1,24 +1,27 @@
 import * as mapboxgl from 'mapbox-gl';
 import './mapbox-gl.css';
+import { makeNewLineChart } from '../multiLineChart/lineChart';
 
 var map = null;
 var _gas_stations = null;
 var marker1 = new mapboxgl.Marker({color: 'red'});
 const colorlist = ['blue','violet','yellow','green','orange']
-console.log(marker1)
 const neighbors = new Array(5);
 for(let i = 0; i < 5; i++)
 {
     neighbors[i] =  new mapboxgl.Marker({color:colorlist[i]})
 }
 
+function getCurrentTime(){
+  return new Date(2015,1,1)
+}
 
 export function addMarker(event){
-  console.log(event)
   var coordinates = event.lngLat;
   marker1.setLngLat(coordinates).addTo(map);
   let topk = pClosest(_gas_stations,5,coordinates)
-  console.log(topk)
+  const time = getCurrentTime()
+  makeNewLineChart(topk,time)
   for(let i = 0; i < 6; i++)
   {
       neighbors[i].setLngLat([topk[i].lng,topk[i].lat]).addTo(map); 

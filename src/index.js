@@ -6,11 +6,12 @@ import { useTest } from './useData/useTest';
 import { ColorBar } from './ColorBar';
 import { HChart} from './horizonMap/HChart';
 import {useHex} from './useData/useHex';
-import {Hexmap} from './Basemap_Hexbin';
+import {Hexmap,makeHexMap} from './Basemap_Hexbin';
 import './overview.css';
 import {map_live} from './mapbox/mapbox'
 import {makeLineChart} from './multiLineChart/lineChart'
 import { eventHandlers, makeVerticalLine } from './eventHandlers';
+
 
 
 
@@ -36,8 +37,22 @@ const App = () => {
     z: d => d.name,
   });
 
-
-
+  const query = `
+  select avg,date,stid from perfect where lat=51.430709 and lng=8.002618
+    and date between '2015-1-1' and '2015-1-15'
+    union 
+    select avg,date,stid from perfect where lat=51.42032 and lng=8.040306
+    and date between '2015-1-1' and '2015-1-15'
+    union
+    select avg,date,stid from perfect where lat=51.40164 and lng=8.05985
+    and date between '2015-1-1' and '2015-1-15'
+    union
+    select avg,date,stid from perfect where lat=51.4104958 and lng=8.054933
+    and date between '2015-1-1' and '2015-1-15'
+    union
+    select avg,date,stid from perfect where lat=51.4205 and lng=7.9903
+    and date between '2015-1-1' and '2015-1-15' order by date
+  `
 
   //TODO refactor 
   if (document.getElementById("horizon_container") !== null &&
@@ -48,41 +63,22 @@ const App = () => {
     document.getElementById("horizon_container").appendChild(hChart)
     makeHexMap(map,fuel_price)
     map_live(fuel_price)
-    makeLineChart()
+    makeLineChart(query)
     makeVerticalLine(projection)
     eventHandlers(projection)
-   
   } 
-
-
-  function makeHexMap(map,fuel_price){
-    let projected_points = fuel_price.map((d)=>{
-      const [x, y] = projection([Number(d.lng), Number(d.lat)]);
-      let diesel = d.diesel;
-      return {diesel,x,y}; 
-    });
-  
-    const hexmap = Hexmap(width,height,projection,map,projected_points);
-    document.getElementById("hexmap_container").appendChild(hexmap)
-    document.getElementById("hexmap_container").firstChild.setAttribute("id", "hexmap")
-
-    const colorValue = d => d.diesel;
-
-    const colorScale = scaleSequential(interpolateBuGn)
-		.domain([min(fuel_price,colorValue),max(fuel_price,colorValue)]);
-
-    ColorBar(colorScale);
-  }
 
 
   select("#horizon_graph")
   .on("click",(event,d)=>{ 
+    const timescale = scaleTime()
+      .range([523,1908])
+      .domain([new Date().setFullYear(2014,6,8),new Date().setFullYear(2020,10,3)])
     const mouse_on = timescale.invert(event.screenX);
     const year = mouse_on.getFullYear().toString()
     const month = mouse_on.getMonth().toString()
     const day = mouse_on.getDate().toString()
     const csvUrl = `http://127.0.0.1:5000/diesel/${year}/${month}/${day}`
-    
     csv(csvUrl)
     .then(data => {
       data.forEach(d => {
@@ -93,9 +89,6 @@ const App = () => {
     });
   });
 
-  const timescale = scaleTime()
-      .range([523,1908])
-      .domain([new Date().setFullYear(2014,6,8),new Date().setFullYear(2020,10,3)])
 
   return (
     <div class="root">
@@ -116,7 +109,6 @@ const App = () => {
           <div class ="overview_level_child" id="horizon_container"></div>
           <div id="horizon_legend">horizon_legend</div>
         </div>
-       
       </div>
       
 
@@ -128,7 +120,7 @@ const App = () => {
         </div>
         <div class = "map_level_child" id="map_container" ></div>
         <div class = "map_level_child" id="plot_container" >
-          <svg id = "line_chart" width="600px" height="300px" transform="translate(280,250) scale(2.5)"></svg>
+          {/* <svg id = "line_chart" width="600px" height="300px" transform="translate(280,250) scale(2.5)"></svg> */}
         </div>
       </div>
     </div>

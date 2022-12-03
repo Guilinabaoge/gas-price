@@ -86,3 +86,36 @@ def getDiesel(year, month, day):
     result = cur.fetchall()
     
     return result
+
+
+def linechart(query):
+    
+    # Connect to your postgres DB
+    conn = psycopg2.connect("dbname=postgres user=postgres ")
+
+    # Open a cursor to perform database operations
+    cur = conn.cursor()
+    # query = "select date,states,diesel from final_gas where date between '{0}' and '{1}' ".format(_from,_to)
+    # query = """
+    # select avg,date,stid from perfect where lat=51.430709 and lng=8.002618
+    # and date between '2015-1-1' and '2015-1-15'
+    # union 
+    # select avg,date,stid from perfect where lat=51.42032 and lng=8.040306
+    # and date between '2015-1-1' and '2015-1-15'
+    # union
+    # select avg,date,stid from perfect where lat=51.40164 and lng=8.05985
+    # and date between '2015-1-1' and '2015-1-15'
+    # union
+    # select avg,date,stid from perfect where lat=51.4104958 and lng=8.054933
+    # and date between '2015-1-1' and '2015-1-15'
+    # union
+    # select avg,date,stid from perfect where lat=51.4205 and lng=7.9903
+    # and date between '2015-1-1' and '2015-1-15' order by date
+    # """
+    # Execute a query
+    cur.execute(query)
+    # Retrieve query results
+    result = cur.fetchall()
+    
+    return result
+

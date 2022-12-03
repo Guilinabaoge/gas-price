@@ -1,6 +1,6 @@
 from flask import Flask
 from collections import Counter
-from query import getState,getBetween,getHex,getDiesel
+from query import getState,getBetween,getHex,getDiesel,linechart
 from flask_cors import CORS
 
 
@@ -51,4 +51,11 @@ def diesel_price(year,month,day):
     header = 'diesel,lat,lng\n'
     str_rows = [','.join(map(str, row)) for row in result]
     return header + '\n'.join(str_rows)
-  
+
+
+@app.route("/linechart/<query>")
+def make_linechart(query):
+    result = linechart(query)
+    header = 'temperature,timestamp,city\n'
+    str_rows = [','.join(map(str, row)) for row in result]
+    return header + '\n'.join(str_rows)

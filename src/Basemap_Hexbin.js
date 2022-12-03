@@ -1,6 +1,7 @@
 import * as d3 from "d3"
 import './map_level.css'
 import {hexbin} from 'd3-hexbin'
+import { ColorBar } from './ColorBar';
 
 export function Hexmap (map_width,height,proj,states,city_info){
   
@@ -60,11 +61,33 @@ export function Hexmap (map_width,height,proj,states,city_info){
       .style("stroke", "#fff")
       .attr("stroke-width", 0.4)
 
-   
-
   return div.node();
 }
 
+
+export function makeHexMap(map,fuel_price){
+  const width = 900;
+  const height = 600;
+  const projection = d3.geoMercator()
+  .fitSize([width, height], map)
+
+  let projected_points = fuel_price.map((d)=>{
+    const [x, y] = projection([Number(d.lng), Number(d.lat)]);
+    let diesel = d.diesel;
+    return {diesel,x,y}; 
+  });
+
+  const hexmap = Hexmap(width,height,projection,map,projected_points);
+  document.getElementById("hexmap_container").appendChild(hexmap)
+  document.getElementById("hexmap_container").firstChild.setAttribute("id", "hexmap")
+
+  const colorValue = d => d.diesel;
+
+  const colorScale = d3.scaleSequential(d3.interpolateBuGn)
+  .domain([d3.min(fuel_price,colorValue),d3.max(fuel_price,colorValue)]);
+
+  ColorBar(colorScale);
+}
 
 
 

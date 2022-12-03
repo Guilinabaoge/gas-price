@@ -82,5 +82,6 @@ export function makeVerticalLine(){
       .style("background-color", "#D3D3D3")
       .style('padding', 6)
       .style('display', 'none')
-
   }
+
+
