@@ -1,7 +1,7 @@
 import fetch from "node-fetch"
 import pg from "pg"
 
-//get the id of those stations havent got state
+//get the id of those stations havent got state attribute
 async function getStation_id(){
   const client = new pg.Client({
     user: 'postgres',
@@ -54,12 +54,13 @@ async function updateState(){
     lng = result[2];
   })
   await reverseGeocoding(lat,lng).then((result)=>{state = result})
+  console.log(stid)
+  console.log(state)
 
   client.connect()
   
   const update = await new Promise((resolve, reject) => {
     client.query(`update perfect set state = '${state}' where stid = '${stid}'`, (err, res) => {
-      console.log("update success")
       resolve("update success")
       client.end()
     })
@@ -69,7 +70,7 @@ async function updateState(){
 
 setInterval(function(){ 
   updateState()
-}, 1000);
+}, 500);
 
 
 

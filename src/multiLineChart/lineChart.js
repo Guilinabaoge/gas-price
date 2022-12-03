@@ -135,6 +135,7 @@ export function makeLineChart(){
         d.timestamp = new Date(d.timestamp);
       });
       render(data);
+      console.log(data)
     });
 }  
   

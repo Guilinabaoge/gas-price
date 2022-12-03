@@ -18,13 +18,12 @@ export function addMarker(event){
   var coordinates = event.lngLat;
   marker1.setLngLat(coordinates).addTo(map);
   let topk = pClosest(_gas_stations,5,coordinates)
-  for(let i = 0; i < 5; i++)
+  console.log(topk)
+  for(let i = 0; i < 6; i++)
   {
       neighbors[i].setLngLat([topk[i].lng,topk[i].lat]).addTo(map); 
   }
-  
 }
-
 
 
 

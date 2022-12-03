@@ -43,7 +43,8 @@ def getBetween():
     # Open a cursor to perform database operations
     cur = conn.cursor()
     # query = "select date,states,diesel from final_gas where date between '{0}' and '{1}' ".format(_from,_to)
-    query = "select * from demo1 order by date"
+    # query = "select * from demo1 order by date"
+    query = "select date,state,avg from horizon_graph"
     # Execute a query
     cur.execute(query)
     # Retrieve query results

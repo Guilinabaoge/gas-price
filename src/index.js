@@ -89,7 +89,6 @@ const App = () => {
         d.diesel = Number(d.diesel);
       });
       select("#hexmap").remove()
-      console.log(data)
       makeHexMap(map,data)
     });
   });
