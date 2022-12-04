@@ -146,7 +146,7 @@ const App = () => {
         </div>
         <div> 
           <div class ="overview_level_child" id="horizon_container"></div>
-          <div id="horizon_legend">horizon_legend</div>
+          {/* <div id="horizon_legend">horizon_legend</div> */}
         </div>
       </div>
       

@@ -16,7 +16,6 @@ function getCurrentTime(){
   let year = parseInt(document.getElementById("dashboard_year").textContent.slice(5))
   let month = parseInt(document.getElementById("dashboard_month").textContent.slice(6))
   let day = parseInt(document.getElementById("dashboard_day").textContent.slice(4))
-  
   console.log(year,month,day)
   
  

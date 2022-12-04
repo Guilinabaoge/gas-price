@@ -20,7 +20,7 @@ export function HChart(data, {
   marginBottom = 0, // bottom margin, in pixels
   marginLeft = 0, // left margin, in pixels
   width = 640, // outer width, in pixels
-  size = 20, // outer height of a single horizon, in pixels
+  size = 10, // outer height of a single horizon, in pixels
   bands = 9, // number of bands
   padding = 1, // separation between adjacent horizons
   xType = d3.scaleUtc, // type of x-scale
@@ -55,7 +55,7 @@ export function HChart(data, {
   // Construct scales and axes.
   const xScale = xType(xDomain, xRange);
   const yScale = yType(yDomain, yRange);
-  const xAxis = d3.axisTop(xScale).ticks(width / 80).tickSizeOuter(0);
+  const xAxis = d3.axisTop(xScale).ticks(width / 15).tickSizeOuter(3);
   
   // A unique identifier for clip paths (to avoid conflicts).
   const uid = `O-${Math.random().toString(16).slice(2)}`;
@@ -113,7 +113,7 @@ export function HChart(data, {
       .attr("x", marginLeft)
       .attr("y", (size + padding) / 3)
       .attr("dy", "0.35em")
-      .attr("transform","scale(1.5)")
+      .attr("transform","translate(0,2),scale(1)")
       .text(([z]) => z);
 
   // Since there are normally no left or right margins, don’t show ticks that

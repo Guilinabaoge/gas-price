@@ -46,7 +46,7 @@ function updateTooltipContent(event){
   const year = mouse_on.getFullYear().toString()
   const month = mouse_on.getMonth().toString()
   const day = mouse_on.getDate().toString()
-    select("#tooltip").html(`Year:${year}   Month:${month}   Day:${day}`)
+    select("#tooltip").html(`Year:${year}   Month:${(parseInt(month)+1).toString()}   Day:${day}`)
     .style('display', 'block')
     .style('left', `${event.screenX-200}px`)
     .style('top', `${event.screenY-180}px`)

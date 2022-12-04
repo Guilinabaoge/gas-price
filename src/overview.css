@@ -2,7 +2,6 @@
 .overview_level { 
     display: grid;
     grid-template-columns: 500px 1fr;
-    /* grid-gap: 20px; */
   } 
   
   .overview_level_child{
@@ -17,19 +16,9 @@
 
   #introduction{
     white-space: pre-line;
-    font-size:20px
+    font-size:10px
   }
   
-  /* .date_dashboard{
-    width: 100%;
-    display: grid;
-    border: 3px solid black;
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-
-  .dashboard_item{
-    border: 3px solid black;
-  } */
 
   #introduction_container{
     /* grid-gap: 100px; */
