@@ -89,12 +89,8 @@ const App = () => {
     });
   });
 
-
-  return (
-    <div class="root">
-      <div class="overview_level">
-        <div class ="overview_level_child" id="introduction_container">
-          <p id="introduction">{`This is an visualization for fuel price of germany during 2015-2020.\nThe horizon graph shows the overview a the whole dataset.
+  const introduction = 
+  `This is an visualization for fuel price of germany during 2015-2020.\nThe horizon graph shows the overview a the whole dataset.
                 The hexbin map and live map show the fuel price of specific date. 
                 There goals of this visualization are: 
                 1. Show the overview of the trend of the gas price. 
@@ -102,8 +98,24 @@ const App = () => {
 
                 Here are the list of interactions in this visualization: 
                 1. Swith the fuel type.
-                2. Switch the time`}
-          </p>
+                2. Switch the time`
+
+
+  return (
+    <div class="root">
+      <div class="overview_level">
+        <div class ="overview_level_child" id="introduction_container">
+          <div>
+            <p id="introduction">{introduction}</p>
+          </div>
+          <div class="date_dashboard">
+            <div class="one"><p>This dash board displace the which date's data 
+              are used for the day level visualization in the hexbinned map. 
+              Click the horizon graph to select which day to visualize</p></div>
+            <div class="dashboard_item">Year:2018</div>
+            <div class="dashboard_item">Month:11</div>
+            <div class="dashboard_item">Day:2</div>
+          </div>
         </div>
         <div> 
           <div class ="overview_level_child" id="horizon_container"></div>
@@ -120,11 +132,9 @@ const App = () => {
         </div>
         <div class = "map_level_child" id="map_container" ></div>
         <div class = "map_level_child" id="plot_container" >
-          {/* <svg id = "line_chart" width="600px" height="300px" transform="translate(280,250) scale(2.5)"></svg> */}
         </div>
       </div>
     </div>
-    
   );
 };
 

@@ -13,7 +13,7 @@ for(let i = 0; i < 5; i++)
 }
 
 function getCurrentTime(){
-  return new Date(2015,1,1)
+  return new Date(2018,11,2)
 }
 
 export function addMarker(event){
@@ -27,7 +27,6 @@ export function addMarker(event){
       neighbors[i].setLngLat([topk[i].lng,topk[i].lat]).addTo(map); 
   }
 }
-
 
 
 export function map_live(gas_stations){

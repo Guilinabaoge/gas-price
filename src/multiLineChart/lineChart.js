@@ -113,6 +113,8 @@ import './styles.css';
       );
     
     colorScale.domain(nested.map(d => d.key));
+
+    
     
     g.selectAll('.line-path').data(nested)
       .enter().append('path')
@@ -149,7 +151,7 @@ export function makeLineChart(query){
 export function makeNewLineChart(topk,time){
   var start = time 
   var end = new Date(time.getFullYear(),time.getMonth(),time.getDate())
-  end.setDate(time.getDate() + 15)
+  end.setDate(time.getDate() + 14)
 
   var start_string = `${start.getFullYear().toString()}-${start.getMonth().toString()}-${start.getDate().toString()}`;
   var end_string = `${end.getFullYear().toString()}-${end.getMonth().toString()}-${end.getDate().toString()}`;

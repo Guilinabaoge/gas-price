@@ -20,3 +20,41 @@
     font-size:20px
   }
   
+  /* .date_dashboard{
+    width: 100%;
+    display: grid;
+    border: 3px solid black;
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .dashboard_item{
+    border: 3px solid black;
+  } */
+
+  #introduction_container{
+    /* grid-gap: 100px; */
+    display: grid;
+    grid-template-rows: auto auto;
+  }
+
+  .date_dashboard {
+    display: grid;
+    grid-template-columns: auto auto auto;
+    background-color: #2196F3;
+    padding: 10px;
+  }
+  
+  .dashboard_item {
+    bottom: -500px;
+    background-color: rgba(255, 255, 255, 0.8);
+    border: 1px solid rgba(0, 0, 0, 0.8);
+    padding: 20px;
+    font-size: 30px;
+    text-align: center;
+  }
+  .one {
+    background-color:rgba(255, 255, 255, 0.8);
+    grid-column: 1 / 4;
+    grid-row: 1;
+    border: 1px solid rgba(0, 0, 0, 0.8);
+  }
