@@ -38,21 +38,43 @@ const App = () => {
   });
 
   const query = `
-  select avg,date,stid from perfect where lat=51.430709 and lng=8.002618
-    and date between '2015-1-1' and '2015-1-15'
-    union 
-    select avg,date,stid from perfect where lat=51.42032 and lng=8.040306
-    and date between '2015-1-1' and '2015-1-15'
-    union
-    select avg,date,stid from perfect where lat=51.40164 and lng=8.05985
-    and date between '2015-1-1' and '2015-1-15'
-    union
-    select avg,date,stid from perfect where lat=51.4104958 and lng=8.054933
-    and date between '2015-1-1' and '2015-1-15'
-    union
-    select avg,date,stid from perfect where lat=51.4205 and lng=7.9903
-    and date between '2015-1-1' and '2015-1-15' order by date
+  select p.avg,p.date,p.stid,c.color from perfect as p, color as c 
+  where p.lat=51.353188 and p.lng=11.102475 and c.color_id = 1 
+  and p.date between '2018-11-2' and '2018-11-16' 
+  union 
+  select p.avg,p.date,p.stid,c.color from perfect as p, color as c 
+  where p.lat=54.746338 and p.lng=9.894532 and c.color_id = 2 
+  and p.date between '2018-11-2' and '2018-11-16' 
+  union
+  select p.avg,p.date,p.stid,c.color from perfect as p, color as c 
+  where p.lat=54.6652 and p.lng=9.9207 and c.color_id = 3
+  and p.date between '2018-11-2' and '2018-11-16' 
+  union
+  select p.avg,p.date,p.stid,c.color from perfect as p, color as c 
+  where p.lat=54.65925 and p.lng=9.925332 and c.color_id = 4
+  and p.date between '2018-11-2' and '2018-11-16' 
+  union
+  select p.avg,p.date,p.stid,c.color from perfect as p, color as c 
+  where p.lat=54.657238 and p.lng=9.946128 and c.color_id = 5
+  and p.date between '2018-11-2' and '2018-11-16' order by date
   `
+  
+  // `
+  // select avg,date,stid from perfect where lat=51.430709 and lng=8.002618
+  //   and date between '2015-1-1' and '2015-1-15'
+  //   union 
+  //   select avg,date,stid from perfect where lat=51.42032 and lng=8.040306
+  //   and date between '2015-1-1' and '2015-1-15'
+  //   union
+  //   select avg,date,stid from perfect where lat=51.40164 and lng=8.05985
+  //   and date between '2015-1-1' and '2015-1-15'
+  //   union
+  //   select avg,date,stid from perfect where lat=51.4104958 and lng=8.054933
+  //   and date between '2015-1-1' and '2015-1-15'
+  //   union
+  //   select avg,date,stid from perfect where lat=51.4205 and lng=7.9903
+  //   and date between '2015-1-1' and '2015-1-15' order by date
+  // `
 
   //TODO refactor 
   if (document.getElementById("horizon_container") !== null &&
@@ -78,6 +100,11 @@ const App = () => {
     const year = mouse_on.getFullYear().toString()
     const month = mouse_on.getMonth().toString()
     const day = mouse_on.getDate().toString()
+    document.getElementById("dashboard_year").textContent = `Year:${year}`;
+    document.getElementById("dashboard_month").textContent = `Month:${month}`;
+    document.getElementById("dashboard_day").textContent = `Day:${day}`;
+
+
     const csvUrl = `http://127.0.0.1:5000/diesel/${year}/${month}/${day}`
     csv(csvUrl)
     .then(data => {
@@ -112,9 +139,9 @@ const App = () => {
             <div class="one"><p>This dash board displace the which date's data 
               are used for the day level visualization in the hexbinned map. 
               Click the horizon graph to select which day to visualize</p></div>
-            <div class="dashboard_item">Year:2018</div>
-            <div class="dashboard_item">Month:11</div>
-            <div class="dashboard_item">Day:2</div>
+            <div class="dashboard_item" id="dashboard_year">Year:2018</div>
+            <div class="dashboard_item" id="dashboard_month">Month:11</div>
+            <div class="dashboard_item" id="dashboard_day">Day:2</div>
           </div>
         </div>
         <div> 
@@ -131,7 +158,7 @@ const App = () => {
               </div>
         </div>
         <div class = "map_level_child" id="map_container" ></div>
-        <div class = "map_level_child" id="plot_container" >
+        <div class = "map_level_child" id="plot_container">
         </div>
       </div>
     </div>

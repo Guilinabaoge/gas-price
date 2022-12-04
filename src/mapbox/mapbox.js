@@ -13,7 +13,14 @@ for(let i = 0; i < 5; i++)
 }
 
 function getCurrentTime(){
-  return new Date(2018,11,2)
+  let year = parseInt(document.getElementById("dashboard_year").textContent.slice(5))
+  let month = parseInt(document.getElementById("dashboard_month").textContent.slice(6))
+  let day = parseInt(document.getElementById("dashboard_day").textContent.slice(4))
+  
+  console.log(year,month,day)
+  
+ 
+  return new Date(year,month,day)
 }
 
 export function addMarker(event){

@@ -56,6 +56,6 @@ def diesel_price(year,month,day):
 @app.route("/linechart/<query>")
 def make_linechart(query):
     result = linechart(query)
-    header = 'temperature,timestamp,city\n'
+    header = 'temperature,timestamp,city,color\n'
     str_rows = [','.join(map(str, row)) for row in result]
     return header + '\n'.join(str_rows)

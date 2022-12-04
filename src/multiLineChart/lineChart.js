@@ -24,6 +24,7 @@ import './styles.css';
 
     const svg = create("svg")
       .attr("id","line_chart")
+      .attr("class","plot_item")
       .attr("width", "600px")
       .attr("height", "300px")
       .attr("transform","translate(280,250) scale(2.5)")
@@ -120,7 +121,8 @@ import './styles.css';
       .enter().append('path')
         .attr('class', 'line-path')
         .attr('d', d => lineGenerator(d.values))
-        .attr('stroke', d => colorScale(d.key));
+        .attr('stroke', d => d.values[0].color);
+        // .attr('stroke', d => colorScale(d.key));
     
     g.append('text')
         .attr('class', 'title')
@@ -145,10 +147,12 @@ export function makeLineChart(query){
         d.timestamp = new Date(d.timestamp);
       });
       render(data);
+      console.log(data)
     });
 }  
 
 export function makeNewLineChart(topk,time){
+  console.log(time)
   var start = time 
   var end = new Date(time.getFullYear(),time.getMonth(),time.getDate())
   end.setDate(time.getDate() + 14)
@@ -159,20 +163,25 @@ export function makeNewLineChart(topk,time){
   
   const query = 
   `
-    select avg,date,stid from perfect where lat=${topk[0].lat} and lng=${topk[0].lng}
-    and date between '${start_string}' and '${end_string}'
-    union 
-    select avg,date,stid from perfect where lat=${topk[1].lat} and lng=${topk[1].lng}
-    and date between '${start_string}' and '${end_string}'
-    union
-    select avg,date,stid from perfect where lat=${topk[2].lat} and lng=${topk[2].lng}
-    and date between '${start_string}' and '${end_string}'
-    union
-    select avg,date,stid from perfect where lat=${topk[3].lat} and lng=${topk[3].lng}
-    and date between '${start_string}' and '${end_string}'
-    union
-    select avg,date,stid from perfect where lat=${topk[4].lat} and lng=${topk[4].lng}
-    and date between '${start_string}' and '${end_string}' order by date
+  select p.avg,p.date,p.stid,c.color from perfect as p, color as c 
+  where p.lat=${topk[0].lat} and p.lng=${topk[0].lng} and c.color_id = 1 
+  and p.date between '${start_string}' and '${end_string}'
+  union 
+  select p.avg,p.date,p.stid,c.color from perfect as p, color as c 
+  where p.lat=${topk[1].lat} and p.lng=${topk[1].lng} and c.color_id = 2 
+  and p.date between '${start_string}' and '${end_string}'
+  union
+  select p.avg,p.date,p.stid,c.color from perfect as p, color as c 
+  where p.lat=${topk[2].lat} and p.lng=${topk[2].lng} and c.color_id = 3
+  and p.date between '${start_string}' and '${end_string}'
+  union
+  select p.avg,p.date,p.stid,c.color from perfect as p, color as c 
+  where p.lat=${topk[3].lat} and p.lng=${topk[3].lng} and c.color_id = 4
+  and p.date between '${start_string}' and '${end_string}'
+  union
+  select p.avg,p.date,p.stid,c.color from perfect as p, color as c 
+  where p.lat=${topk[4].lat} and p.lng=${topk[4].lng} and c.color_id = 5
+  and p.date between '${start_string}' and '${end_string}' order by date
   `
 
   select("#line_chart").remove()
