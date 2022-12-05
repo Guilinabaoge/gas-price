@@ -27,13 +27,12 @@ import './styles.css';
       .attr("class","plot_item")
       .attr("width", "600px")
       .attr("height", "300px")
-      .attr("transform","translate(280,250) scale(2.5)")
+      .attr("transform","translate(300,350) scale(2.9)")
 
     document.getElementById("plot_container").appendChild(svg.node())
-      // <svg id = "line_chart" width="600px" height="300px" transform="translate(280,250) scale(2.5)"></svg>
+      
 
-    // const svg = select('#line_chart');
-    const title = 'Fuel price change of 5 closest stations';
+    const title = 'Diesel price change of 5 closest stations';
     
     const xValue = d => d.timestamp;
     const xAxisLabel = 'Time';
@@ -47,8 +46,7 @@ import './styles.css';
     const margin = { top: 25, right: 20, bottom: 0, left:100 };
     const innerWidth = width - margin.left - margin.right;
     const innerHeight = height - margin.top - margin.bottom;
-    // const innerWidth = width 
-    // const innerHeight = height 
+   
     
     const xScale = scaleTime()
       .domain(extent(data, xValue))
@@ -77,26 +75,26 @@ import './styles.css';
     const yAxisG = g.append('g').call(yAxis);
     yAxisG.selectAll('.domain').remove();
     
-    yAxisG.append('text')
-        .attr('class', 'axis-label')
-        .attr('y', -30)
-        .attr('x', -innerHeight / 2)
-        .attr('fill', 'black')
-        .attr('transform', `rotate(-90)`)
-        .attr('text-anchor', 'middle')
-        .text(yAxisLabel);
+    // yAxisG.append('text')
+    //     .attr('class', 'axis-label')
+    //     .attr('y', -30)
+    //     .attr('x', -innerHeight / 2)
+    //     .attr('fill', 'black')
+    //     .attr('transform', `rotate(-90)`)
+    //     .attr('text-anchor', 'middle')
+    //     .text(yAxisLabel);
     
     const xAxisG = g.append('g').call(xAxis)
       .attr('transform', `translate(0,${innerHeight})`);
     
     xAxisG.select('.domain').remove();
     
-    xAxisG.append('text')
-        .attr('class', 'axis-label')
-        .attr('y', 25)
-        .attr('x', 90)
-        .attr('fill', 'black')
-        .text(xAxisLabel);
+    // xAxisG.append('text')
+    //     .attr('class', 'axis-label')
+    //     .attr('y', 25)
+    //     .attr('x', 90)
+    //     .attr('fill', 'black')
+    //     .text(xAxisLabel);
     
     const lineGenerator = line()
       .x(d => xScale(xValue(d)))

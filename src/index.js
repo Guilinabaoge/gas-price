@@ -1,12 +1,11 @@
 import React, { StrictMode} from 'react';
 import { createRoot } from "react-dom/client";
-import { scaleSequential, min,max, geoMercator,interpolateBuGn,select,scaleTime,csv} from 'd3';
+import { geoMercator,select,scaleTime,csv} from 'd3';
 import { useMap } from './useData/useMap';
 import { useTest } from './useData/useTest'; 
-import { ColorBar } from './ColorBar';
 import { HChart} from './horizonMap/HChart';
 import {useHex} from './useData/useHex';
-import {Hexmap,makeHexMap} from './Basemap_Hexbin';
+import {makeHexMap} from './Basemap_Hexbin';
 import './overview.css';
 import {map_live} from './mapbox/mapbox'
 import {makeLineChart} from './multiLineChart/lineChart'
@@ -58,23 +57,6 @@ const App = () => {
   where p.lat=54.657238 and p.lng=9.946128 and c.color_id = 5
   and p.date between '2018-11-2' and '2018-11-16' order by date
   `
-  
-  // `
-  // select avg,date,stid from perfect where lat=51.430709 and lng=8.002618
-  //   and date between '2015-1-1' and '2015-1-15'
-  //   union 
-  //   select avg,date,stid from perfect where lat=51.42032 and lng=8.040306
-  //   and date between '2015-1-1' and '2015-1-15'
-  //   union
-  //   select avg,date,stid from perfect where lat=51.40164 and lng=8.05985
-  //   and date between '2015-1-1' and '2015-1-15'
-  //   union
-  //   select avg,date,stid from perfect where lat=51.4104958 and lng=8.054933
-  //   and date between '2015-1-1' and '2015-1-15'
-  //   union
-  //   select avg,date,stid from perfect where lat=51.4205 and lng=7.9903
-  //   and date between '2015-1-1' and '2015-1-15' order by date
-  // `
 
   //TODO refactor 
   if (document.getElementById("horizon_container") !== null &&
