@@ -13,10 +13,6 @@ export function eventHandlers(projection){
     })
     .on("mouseover",(event,d)=>{
       //TODO hovering effect of hexmap 
-      // event.fromElement.attr("fill","red")
-      // select(event.fromElement).style("fill","red")
-      // console.log(select(event.fromElement))
-      // console.log(event.fromElement)
     }) ;
   
     select("#horizon_graph")

@@ -29,7 +29,6 @@ const App = () => {
     return <pre>Loading...</pre>;
   }
 
-
   const hChart = HChart(test,{
     x: d => d.date,
     y: d => d.value,
@@ -128,7 +127,6 @@ const App = () => {
         </div>
         <div> 
           <div class ="overview_level_child" id="horizon_container"></div>
-          {/* <div id="horizon_legend">horizon_legend</div> */}
         </div>
       </div>
       

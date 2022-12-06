@@ -21,7 +21,6 @@
   
 
   #introduction_container{
-    /* grid-gap: 100px; */
     display: grid;
     grid-template-rows: auto auto;
   }

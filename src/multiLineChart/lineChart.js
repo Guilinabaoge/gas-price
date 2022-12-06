@@ -14,7 +14,6 @@ import {
     create
   } from 'd3';
 import { nest } from 'd3-collection'
-import { colorLegend } from './colorLegend';
 import './styles.css';
 
   function render(data){
