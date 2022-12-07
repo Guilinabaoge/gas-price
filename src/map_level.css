@@ -3,7 +3,7 @@
   display: grid;
   width: 100%;
   grid-template-columns: 600px 1fr 1fr;
-  /* grid-gap: 20px; */
+  /* grid-gap: 3px; */
 } 
 
 .map_level_child{

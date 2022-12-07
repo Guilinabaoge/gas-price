@@ -19,17 +19,17 @@ const height = 600;
 
 const App = () => {
   const map = useMap();
-  const test = useTest();
+  const horizon_data = useTest();
   const fuel_price = useHex();
 
   const projection = geoMercator()
   .fitSize([width, height], map)
 
-  if (!map||!fuel_price||!test) {
+  if (!map||!fuel_price||!horizon_data) {
     return <pre>Loading...</pre>;
   }
 
-  const hChart = HChart(test,{
+  const hChart = HChart(horizon_data,{
     x: d => d.date,
     y: d => d.value,
     z: d => d.name,
@@ -75,14 +75,14 @@ const App = () => {
   select("#horizon_graph")
   .on("click",(event,d)=>{ 
     const timescale = scaleTime()
-      .range([523,1908])
+      .range([9,1602])
       .domain([new Date().setFullYear(2014,6,8),new Date().setFullYear(2020,10,3)])
     const mouse_on = timescale.invert(event.screenX);
     const year = mouse_on.getFullYear().toString()
     const month = mouse_on.getMonth().toString()
     const day = mouse_on.getDate().toString()
     document.getElementById("dashboard_year").textContent = `Year:${year}`;
-    document.getElementById("dashboard_month").textContent = `Month:${month}`;
+    document.getElementById("dashboard_month").textContent = `Month:${(parseInt(month)+1).toString()}`;
     document.getElementById("dashboard_day").textContent = `Day:${day}`;
 
 
@@ -97,36 +97,19 @@ const App = () => {
     });
   });
 
-  const introduction = 
-  `This is an visualization for fuel price of germany during 2015-2020.\nThe horizon graph shows the overview a the whole dataset.
-                The hexbin map and live map show the fuel price of specific date. 
-                There goals of this visualization are: 
-                1. Show the overview of the trend of the gas price. 
-                2. Shows the nearby gas stations of a given coordinate, and help user to find the historically cheapest station. 
-
-                Here are the list of interactions in this visualization: 
-                1. Swith the fuel type.
-                2. Switch the time`
 
 
   return (
     <div class="root">
-      <div class="overview_level">
+      <div class="overview_level" id = "overview_container">
+        <div class ="overview_level_child" id="horizon_container"></div>
         <div class ="overview_level_child" id="introduction_container">
-          <div>
-            <p id="introduction">{introduction}</p>
+          <div id="horizon_legend_container">
+            {/* TODO refactor here so init div and svg in Hchart */}
+            <svg height = '100%' id='horizon_legend'></svg>
+            {/* <p id="introduction">{introduction}</p> */}
           </div>
-          <div class="date_dashboard">
-            <div class="one"><p>This dash board displace the which date's data 
-              are used for the day level visualization in the hexbinned map. 
-              Click the horizon graph to select which day to visualize</p></div>
-            <div class="dashboard_item" id="dashboard_year">Year:2018</div>
-            <div class="dashboard_item" id="dashboard_month">Month:11</div>
-            <div class="dashboard_item" id="dashboard_day">Day:2</div>
-          </div>
-        </div>
-        <div> 
-          <div class ="overview_level_child" id="horizon_container"></div>
+         
         </div>
       </div>
       
@@ -139,6 +122,14 @@ const App = () => {
         </div>
         <div class = "map_level_child" id="map_container" ></div>
         <div class = "map_level_child" id="plot_container">
+        <div class="date_dashboard">
+            <div class="one"><p>This dash board displace the which date's data 
+              are used for the day level visualization in the hexbinned map. 
+              Click the horizon graph to select which day to visualize</p></div>
+            <div class="dashboard_item" id="dashboard_year">Year:2018</div>
+            <div class="dashboard_item" id="dashboard_month">Month:11</div>
+            <div class="dashboard_item" id="dashboard_day">Day:2</div>
+          </div>
         </div>
       </div>
     </div>

@@ -1,48 +1,49 @@
+.root{
+  background-color: #FAEBD7;
+}
+
+#introduction_container{
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+
 
 .overview_level { 
+    height: 50%;
     display: grid;
-    grid-template-columns: 500px 1fr;
+    grid-template-columns: 7fr 1fr;
+    border: 3px solid black;
   } 
   
-  .overview_level_child{
-    border: 3px solid black;
-  }
-  
+/* .overview_level_child{
+  border: 3px solid black;
+} */
 
-  /* TODO how to change the height of the horizon graph while keep the width. */
-  #horizon_graph{
-    width: 100%; 
-  }
 
-  #introduction{
-    white-space: pre-line;
-    font-size:10px
-  }
-  
+/* TODO how to change the height of the horizon graph while keep the width. */
+#horizon_graph{
+  width: 100%; 
+}
 
-  #introduction_container{
-    display: grid;
-    grid-template-rows: auto auto;
-  }
+.date_dashboard {
+  display: grid;
+  grid-template-columns: auto auto auto;
+  background-color: #2196F3;
+  padding: 10px;
+}
 
-  .date_dashboard {
-    display: grid;
-    grid-template-columns: auto auto auto;
-    background-color: #2196F3;
-    padding: 10px;
-  }
-  
-  .dashboard_item {
-    bottom: -500px;
-    background-color: rgba(255, 255, 255, 0.8);
-    border: 1px solid rgba(0, 0, 0, 0.8);
-    padding: 20px;
-    font-size: 30px;
-    text-align: center;
-  }
-  .one {
-    background-color:rgba(255, 255, 255, 0.8);
-    grid-column: 1 / 4;
-    grid-row: 1;
-    border: 1px solid rgba(0, 0, 0, 0.8);
-  }
+.dashboard_item {
+  bottom: -500px;
+  background-color: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  padding: 20px;
+  font-size: 30px;
+  text-align: center;
+}
+.one {
+  background-color:rgba(255, 255, 255, 0.8);
+  grid-column: 1 / 4;
+  grid-row: 1;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+}

@@ -38,20 +38,22 @@ export function eventHandlers(projection){
 
 
 function updateTooltipContent(event){
+
+  // TODO handle code duplication
   const mouse_on = timescale.invert(event.screenX);
   const year = mouse_on.getFullYear().toString()
   const month = mouse_on.getMonth().toString()
   const day = mouse_on.getDate().toString()
     select("#tooltip").html(`Year:${year}   Month:${(parseInt(month)+1).toString()}   Day:${day}`)
     .style('display', 'block')
-    .style('left', `${event.screenX-200}px`)
-    .style('top', `${event.screenY-180}px`)
+    .style('left', `${event.screenX+20}px`)
+    .style('top', `${event.screenY+0}px`)
     .style('font-size', 11.5)
   }
 
 const timescale = scaleTime()
-  .range([523,1908])
-  .domain([new Date().setFullYear(2014,6,8),new Date().setFullYear(2020,10,3)])
+  .range([9,1610])
+  .domain([new Date().setFullYear(2014,5,7),new Date().setFullYear(2020,9,2)])
 
 
 function clickHex(event){

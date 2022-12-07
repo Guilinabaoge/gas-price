@@ -19,9 +19,9 @@ export function HChart(data, {
   marginRight = 0, // right margin, in pixels
   marginBottom = 0, // bottom margin, in pixels
   marginLeft = 0, // left margin, in pixels
-  width = 640, // outer width, in pixels
+  width = 350, // outer width, in pixels
   size = 10, // outer height of a single horizon, in pixels
-  bands = 9, // number of bands
+  bands = 5, // number of bands
   padding = 1, // separation between adjacent horizons
   xType = d3.scaleUtc, // type of x-scale
   xDomain, // [xmin, xmax]
@@ -30,7 +30,7 @@ export function HChart(data, {
   yDomain, // [ymin, ymax]
   yRange = [size, size - bands * (size - padding)], // [bottom, top]
   zDomain, // array of z-values
-  scheme = d3.schemeRdBu, // color scheme; shorthand for colors
+  scheme = d3.schemeRdYlBu, // color scheme; shorthand for colors
   colors = scheme[Math.max(3, bands)], // an array of colors
 } = {}) {
   // Compute values.
@@ -55,7 +55,7 @@ export function HChart(data, {
   // Construct scales and axes.
   const xScale = xType(xDomain, xRange);
   const yScale = yType(yDomain, yRange);
-  const xAxis = d3.axisTop(xScale).ticks(width / 15).tickSizeOuter(3);
+  const xAxis = d3.axisTop(xScale).ticks(width / 30).tickSizeOuter(3);
   
   // A unique identifier for clip paths (to avoid conflicts).
   const uid = `O-${Math.random().toString(16).slice(2)}`;
@@ -113,7 +113,7 @@ export function HChart(data, {
       .attr("x", marginLeft)
       .attr("y", (size + padding) / 3)
       .attr("dy", "0.35em")
-      .attr("transform","translate(0,2),scale(1)")
+      .attr("transform","translate(0,2),scale(0.4)")
       .text(([z]) => z);
 
   // Since there are normally no left or right margins, don’t show ticks that
@@ -131,8 +131,24 @@ export function HChart(data, {
   const colorScale = d3.scaleSequential(d3.interpolateRdYlBu)
   .domain([d3.min(data,colorValue),d3.max(data,colorValue)]);
 
-  //TODO add colorlegend 
-  // ColorBar(colorScale,"#horizon_legend"); 
+  //TODO refactor this sht code duplication
+  var _svg = d3.select("#horizon_legend");
+  _svg.append("g")
+  .attr("class", "legendQuant")
+  .attr("transform", "translate(40,100) scale(1)");
+
+  var legend = legendColor()
+    .labelFormat(d3.format(".3f"))
+    .cells(10)
+    .shape("rect")
+    .titleWidth(10)
+    .shapeHeight(60)
+    .shapeWidth(60)
+    // .orient('horizontal')
+    .scale(colorScale);
+
+  _svg.select(".legendQuant")
+    .call(legend);
 
   return svg.node();
 }
