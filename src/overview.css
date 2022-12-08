@@ -1,5 +1,6 @@
 .root{
   background-color: #FAEBD7;
+  overflow: hidden;
 }
 
 #introduction_container{
