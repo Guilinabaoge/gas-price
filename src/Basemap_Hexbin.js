@@ -5,6 +5,7 @@ import { ColorBar } from './ColorBar';
 
 export function Hexmap (map_width,height,proj,states,city_info){
   
+  //How many hexbins?  
   var _hexbin =  hexbin()
   .extent([[0, 0], [map_width, height]])
   .x(x => x.x)

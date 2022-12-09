@@ -107,7 +107,6 @@ const App = () => {
           <div id="horizon_legend_container">
             {/* TODO refactor here so init div and svg in Hchart */}
             <svg height = '100%' id='horizon_legend'></svg>
-            {/* <p id="introduction">{introduction}</p> */}
           </div>
          
         </div>
