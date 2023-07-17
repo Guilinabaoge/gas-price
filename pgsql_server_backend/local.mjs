@@ -6,8 +6,8 @@ async function getStation_id(){
   const client = new pg.Client({
     user: 'postgres',
     host: 'localhost',
-    database: 'postgres',
-    password: 'zxc1012m',
+    database: 
+    password: 
     port: 5432,
   })
   client.connect()
